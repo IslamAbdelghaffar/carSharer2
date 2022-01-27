@@ -96,14 +96,14 @@ public final class FahrtDetailsStore implements Closeable {
     }
 
     // query for durschschnittrating
-    public int getAveragerate(int fid){
-        int avg = 0;
+    public float getAveragerate(int fid){
+        float avg = 0;
         try (PreparedStatement preparedStatement=connection.
-                prepareStatement("SELECT Cast(Avg(rating) AS  DECIMAL(4,2))AS average FROM dbp109.bewertung r INNER JOIN dbp109.schreiben s ON s.bewertung=r.beid INNER JOIN dbp109.benutzer b ON s.benutzer=b.bid where FAHRT=?")){
+                prepareStatement("SELECT Avg(Cast(rating as decimal(31,2))) as average FROM dbp109.bewertung r INNER JOIN dbp109.schreiben s ON s.bewertung=r.beid  where FAHRT=?")){
             preparedStatement.setInt(1,fid);
             ResultSet Res=preparedStatement.executeQuery();
             Res.next();
-            avg= Res.getInt("average");
+            avg= Res.getFloat("average");
             return avg;
         } catch (SQLException throwables) {
             throwables.printStackTrace();

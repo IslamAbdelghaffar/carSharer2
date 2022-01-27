@@ -41,7 +41,7 @@ public class FahrtDetailsServlet  extends HttpServlet {
             // contains user's email in the same order as bewertungen
             List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
             // Durschschnittsrating for fart = fid
-            int Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
+            float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
             /**bewertung request**/
             request.setAttribute("average",Durschschnittrating);
@@ -92,7 +92,7 @@ public class FahrtDetailsServlet  extends HttpServlet {
                     // contains user's email in the same order as bewertungen
                     List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
                     // Durschschnittsrating for fart = fid
-                    int Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
+                    float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
                     /**bewertung request**/
                     request.setAttribute("average",Durschschnittrating);
@@ -122,7 +122,7 @@ public class FahrtDetailsServlet  extends HttpServlet {
                     // contains user's email in the same order as bewertungen
                     List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
                     // Durschschnittsrating for fart = fid
-                    int Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
+                    float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
                     /**bewertung request**/
                     request.setAttribute("average",Durschschnittrating);

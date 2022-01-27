@@ -22,8 +22,8 @@ public class FahrtSucheServlet extends HttpServlet {
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        String fahrten = null;
-        request.setAttribute("fahrten",null);
+        List<Fahrt> fahrten = null;
+        request.setAttribute("fahrten",fahrten);
         request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);
     }
 
