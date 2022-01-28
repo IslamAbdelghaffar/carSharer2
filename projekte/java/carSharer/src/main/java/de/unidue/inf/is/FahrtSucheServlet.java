@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class FahrtSucheServlet extends HttpServlet {
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        List<Fahrt> fahrten = null;
+        List<Fahrt> fahrten = Collections.emptyList();
         request.setAttribute("fahrten",fahrten);
         request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);
     }
@@ -55,6 +56,7 @@ public class FahrtSucheServlet extends HttpServlet {
         fahrten= FahrtSucheStore.getInstance().FahrtSuche(startOrt,zielOrt,DateTime);
 
         if(fahrten.size() != 0){
+
             request.setAttribute("fahrten",fahrten);
             request.setAttribute("user",user);
             //  request.setAttribute("message","suc");

@@ -31,20 +31,22 @@ public class Fahrt {
         this.beschreibung = beschreibung;
     }
     // Constructor for meine reservierte fahrten
-    public Fahrt(int fid, String startort, String zielort, String status) {
+    public Fahrt(int fid, String startort, String zielort, String status,int transportmittel) {
         this.Fid = fid;
         this.startort = startort;
         this.zielort = zielort;
         this.status = status;
+        this.transportmittel= transportmittel;
     }
 
     //constructor for offene fahrten
-    public Fahrt(int fid, String startort, String zielort, float fahrtkosten, int freierPlaetze) {
+    public Fahrt(int fid, String startort, String zielort, float fahrtkosten, int freierPlaetze,int transportmittel) {
         this.Fid = fid;
         this.startort = startort;
         this.zielort = zielort;
         this.fahrtkosten = fahrtkosten;
         this.freierPlaetze = freierPlaetze;
+        this.transportmittel=transportmittel;
     }
     // constructor for fahrt details
     public Fahrt(int fid,String startort, String zielort, String fahrtdatumzeit, float fahrtkosten, String status, String beschreibung, int freierPlaetze) {
@@ -57,22 +59,23 @@ public class Fahrt {
         this.beschreibung = beschreibung;
         this.freierPlaetze = freierPlaetze;
     }
-
-    public Fahrt(int fid, String startort, String zielort, float fahrtkosten) {
+// constr. for fartSuche
+    public Fahrt(int fid,String startort, String zielort, float fahrtkosten,int transportmittel) {
         this.Fid = fid;
         this.startort = startort;
         this.zielort = zielort;
         this.fahrtkosten = fahrtkosten;
+        this.transportmittel=transportmittel;
     }
 
 
-    // constr for best driver fahrt ** I am saving durchschnittlich von fahten in maxPlaetz
+    // constr for best driver fahrt ** I am saving durchschnittlich v
 
-    public Fahrt(int fid, String startort, String zielort, int maxPlaetze) {
-        this.Fid = fid;
+    public Fahrt(int fid,int transportmittel ,String startort, String zielort) {
+        this.Fid=fid;
+        this.transportmittel=transportmittel;
         this.startort = startort;
         this.zielort = zielort;
-        this.maxPlaetze = maxPlaetze;
     }
 
     // getter and setter

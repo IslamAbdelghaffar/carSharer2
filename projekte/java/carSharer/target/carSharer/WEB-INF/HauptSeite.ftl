@@ -20,7 +20,7 @@
 
     }
 
-    .table {
+    table {
         display: table;
         border-collapse: separate;
         border-spacing: 50px;
@@ -66,8 +66,9 @@
             <tr style="background-color: white;">
 
                 <td style="width:400px;height:20px; text-align: center;">
-                    <a href="FahrtDetails?fid=${fahrts.fid}&bid=${benutzer}" >Fahrt</a>
-                    <button style="font-size:50px;color:black;"><i class="fa fa-envelope"></i></button>
+                    <a  href="FahrtDetails?fid=${fahrts.fid}&bid=${benutzer}"> <img src="http://localhost:9109/icons/${ReservFahrten.name}.png"
+                                                                                      style="width:60px; height:30px;border:1px solid black; margin-top: 10px;" alt=""></a>
+
                     <p><b>Von:</b> ${fahrts.startort}</p>
                     <p><b>Nach: </b>${fahrts.zielort}</p>
                     <p><b>status: </b>${fahrts.status}</p>
@@ -84,21 +85,26 @@
             offene fahrten</h2>
     </div>
     <table>
-
         <#list offeneFahrten as Offenfahrt>
             <tr style="background-color: white;">
 
                 <td style="width:400px;height:20px;text-align: center;">
-                    <a href="FahrtDetails?fid=${Offenfahrt.fid}&bid=${benutzer}" >Fahrt</a>
-                    <button style="font-size:50px;color:black;"><i class="fa fa-envelope"></i></button>
+
+
+
+                    <a  href="FahrtDetails?fid=${Offenfahrt.fid}&bid=${benutzer}"> <img src="http://localhost:9109/icons/${{ReservFahrten.name}}.png"
+                                                                                        style="width:60px; height:30px;border:1px solid black; margin-top: 10px;" alt=""></a>
+
                     <p><b>Von: ${Offenfahrt.startort }</b></p>
                     <p><b>Nach: ${Offenfahrt.zielort}</b></p>
                     <p><b>Freie Plätze: ${Offenfahrt.freierPlaetze}</b></p>
                     <p><b>fahrtkosten: ${Offenfahrt.fahrtkosten} &euro;</b></p>
 
                 </td>
+
             </tr>
         </#list>
+
 
 
 </form>

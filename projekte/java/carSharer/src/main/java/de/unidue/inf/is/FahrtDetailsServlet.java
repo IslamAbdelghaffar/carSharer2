@@ -19,11 +19,12 @@ import java.util.List;
 public class FahrtDetailsServlet  extends HttpServlet {
     private static final long serialVersionUID = 1L;
     public static reservieren  neureservieren;
+    int user=5;
     /*do get responsible for show the content of fahrtdeatils page*/
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int user=5;
+
         try (FahrtDetailsStore fahrtDetailsStore=new FahrtDetailsStore()){
             /* get farht id and benutzer id and save them */
             //System.out.println("bid:   "+neureservieren.getKunde()+"/"+neureservieren.getFahrt());
@@ -101,6 +102,7 @@ public class FahrtDetailsServlet  extends HttpServlet {
 
                     /**aktionliste request**/
                     request.setAttribute("benutzer",benutzer);
+                    request.setAttribute("user",user);
 
                     /**Informationen request**/
                     request.setAttribute("FahrtDetails",fahrt);
@@ -131,6 +133,7 @@ public class FahrtDetailsServlet  extends HttpServlet {
 
                     /**aktionliste request**/
                     request.setAttribute("benutzer",benutzer);
+                    request.setAttribute("user",user);
 
                     /**Informationen request**/
                     request.setAttribute("FahrtDetails",fahrt);

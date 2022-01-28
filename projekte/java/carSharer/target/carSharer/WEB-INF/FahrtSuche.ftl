@@ -21,7 +21,7 @@
         margin: 5px;
     }
 
-    .table {
+    table {
         display: table;
         border-collapse: separate;
         border-spacing: 50px;
@@ -80,7 +80,7 @@
             <br>${message ! ''}</br>
             <table>
 
-                <#list fahrten  as f  >
+                <#list fahrten   as f  >
                     <tr style="background-color: white;">
                         <td style="width:400px;height:20px;text-align: center;">
 
@@ -90,6 +90,7 @@
 
                         </td>
                     </tr>
+
                 </#list>
             </table>
         </div>

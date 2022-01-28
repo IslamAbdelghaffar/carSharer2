@@ -18,10 +18,15 @@ public class BestDriverStore implements Closeable {
     private static BestDriverStore instance;
     private Connection connection;
     private boolean complete;
-    List<benutzer> benutzers;
+    benutzer BestDriverEmail;
+    private float average;
 
-    public List<benutzer> getBenutzers() {
-        return benutzers;
+    public float getAverage() {
+        return average;
+    }
+
+    public benutzer getBestDriverEmail() {
+        return BestDriverEmail;
     }
 
     public BestDriverStore() throws StoreException {
@@ -33,6 +38,8 @@ public class BestDriverStore implements Closeable {
             throw new StoreException(e);
         }
     }
+
+
     public static BestDriverStore getInstance() {
         if (instance == null) {
             instance = new BestDriverStore();
@@ -42,26 +49,35 @@ public class BestDriverStore implements Closeable {
     }
 
     public List<Fahrt> BestDriverData (){
-        benutzer BestDriverEmail;
-        List<Fahrt> bestDriverFahrten= new ArrayList<>();
-        Fahrt bestDriverFahrt;
-
-        try(PreparedStatement preparedStatement= connection.prepareStatement("SELECT t2.fahrt,t2.startort,t2.zielort,t2.average, t2.email from (SELECT t1.fahrt,t1.startort,t1.zielort,t1.average, b.email from (select t.fahrt,t.average,f.anbieter,f.startort,f.zielort from (select s.fahrt, avg(rating) as Average  from dbp109.schreiben s inner join dbp109.bewertung b on s.bewertung=b.beid group by s.fahrt )t  left join dbp109.fahrt f on t.fahrt=f.fid )t1 left join dbp109.benutzer b on b.bid=t1.anbieter)t2 where  t2.average=(select max(average) from (select  avg(rating)as average from dbp109.schreiben s inner join dbp109.bewertung b on s.bewertung=b.beid  left join dbp109.fahrt f on s.fahrt=f.fid group by s.fahrt)t2)")){
+        List<Fahrt> bestDriverFahrten = new ArrayList<>();
+   // get average and email  and anbieter id of best driver
+        try(PreparedStatement preparedStatement= connection.prepareStatement( "SELECT t2.average, t2.email,t2.anbieter FROM (SELECT t1.average, b.email,t1.anbieter FROM (select t.fahrt,t.average,f.anbieter,f.startort,f.zielort FROM (select s.fahrt,Avg(Cast(rating as decimal(31,2))) as Average  from dbp109.schreiben s inner join dbp109.bewertung b on s.bewertung=b.beid group by s.fahrt )t left join dbp109.fahrt f on t.fahrt=f.fid )t1 left join dbp109.benutzer b on b.bid=t1.anbieter)t2 WHERE t2.average=(select max(average3) FROM (select  Avg(Cast(rating as decimal(31,2))) as average3 from dbp109.schreiben s3 inner join dbp109.bewertung b3 ON s3.bewertung=b3.beid left join dbp109.fahrt f3 ON s3.fahrt=f3.fid group BY s3.fahrt)t2)")){
             ResultSet Res=preparedStatement.executeQuery();
             System.out.println("Hello after exe");
             /** Driver email **/
-            BestDriverEmail = new benutzer(Res.getString(" EMAIL"));
-            benutzers.add(BestDriverEmail);
+            Res.next();
+            BestDriverEmail = new benutzer(Res.getString("EMAIL"));
+            int bestdriverID=Res.getInt("ANBIETER");
+             average= Res.getFloat("AVERAGE");
             System.out.println("Hello after BestDriverEmail");
 
             /** best driver Fahrt details  **/
-            bestDriverFahrt = new Fahrt(Res.getInt("FAHRT"),Res.getString("STARTORT"),Res.getString("ZIELORT"),Res.getInt("AVERAGE"));
-            bestDriverFahrten.add(bestDriverFahrt);
+           try (PreparedStatement preparedStatement2 =connection.prepareStatement("select f.fid,f.transportmittel, f.startort,f.zielort from dbp109.fahrt f where f.anbieter=?")){
+               preparedStatement2.setInt(1,bestdriverID);
+               ResultSet Res2=preparedStatement2.executeQuery();
+               while (Res2.next()){
+                   Fahrt  bestDriverFahrt = new Fahrt(Res2.getInt("fid"),Res2.getInt("TRANSPORTMITTEL"),Res2.getString("startort"),Res2.getString("zielort"));
+                   bestDriverFahrten.add(bestDriverFahrt);
+               }
+
+           }
+
             System.out.println("Hello after bestDriverFahrten");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         return bestDriverFahrten;
     }
 

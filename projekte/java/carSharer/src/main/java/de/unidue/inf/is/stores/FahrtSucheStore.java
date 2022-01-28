@@ -49,7 +49,7 @@ public class FahrtSucheStore implements Closeable {
             System.out.println("I am in fahrtsuche now");
             while (Res.next()){
                 System.out.println("I am here");
-                Fahrt fahrt= new Fahrt(Res.getInt("fid"), Res.getString("startort"), Res.getString("zielort"), Res.getInt("fahrtkosten"));
+                Fahrt fahrt= new Fahrt(Res.getInt("fid"), Res.getString("startort"), Res.getString("zielort"), Res.getInt("fahrtkosten"),Res.getInt("TRANSPORTMITTEL"));
                 fahrtSuche.add(fahrt);
                 System.out.println("Hello from suche store I did the search: I found sth ");
             }

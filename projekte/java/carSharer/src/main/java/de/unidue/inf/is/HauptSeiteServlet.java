@@ -2,6 +2,7 @@
 package de.unidue.inf.is;
 
 import de.unidue.inf.is.domain.Fahrt;
+import de.unidue.inf.is.domain.transportmittel;
 import de.unidue.inf.is.stores.HauptSeiteStore;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,15 +23,16 @@ public final class HauptSeiteServlet extends HttpServlet {
         try (HauptSeiteStore hauptSeiteStore=new HauptSeiteStore()){
 
             // get response from controller and save it in list
-            List<Fahrt>MeineReservfahrte= hauptSeiteStore.getMeineReservFahrten(user);
-            List<Fahrt>offeneFahrten = hauptSeiteStore.getOffeneFahrten();
-
+            List<Fahrt>MeineReservfahrte= HauptSeiteStore.getInstance().getMeineReservFahrten(user);
+            List<Fahrt>offeneFahrten = HauptSeiteStore.getInstance().getOffeneFahrten();
+            List<transportmittel> transportmittels=HauptSeiteStore.getInstance().getTransportmittels();
 
 
             /******** send meine reservierte fahrten to viewer *******/
             request.setAttribute("benutzer",user);
             request.setAttribute("ReservFahrten", MeineReservfahrte);
             request.setAttribute("offeneFahrten",offeneFahrten);
+            request.setAttribute("transportmittels",transportmittels);
 
             request.getRequestDispatcher("HauptSeite.ftl").forward(request, response);
 

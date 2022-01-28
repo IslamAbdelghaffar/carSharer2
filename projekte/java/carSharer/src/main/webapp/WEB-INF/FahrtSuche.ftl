@@ -21,7 +21,7 @@
         margin: 5px;
     }
 
-    .table {
+    table {
         display: table;
         border-collapse: separate;
         border-spacing: 50px;
@@ -38,16 +38,20 @@
     }
 </style>
 
-<body>
-<div class="container">
+<body style="background-color: white;">
+<form action='HauptSeite' onsubmit="submit()" style="text-align: center">
+    <input value="Home" type="submit"
+           style="background-color: black;border-color: white;color:white;text-align: center; width:100px;height:20px;margin-bottom:0px;margin-left:10px;">
+</form>
+<div class="container" style="border:1px solid black;width:40%; height:auto;background-color: white;margin-top: 15px;">
     <form action="FahrtSuche" method="post" target="_self" style="text-align:center;"><br><br>
-        <label for="start"><b>Start: </b></label>
+        <label required for="start"><b>Start: </b></label>
         <input type="text" id="start" name="start" value="" onchange="start1()"
                style="text-align:center;">&ensp;
-        <label for="ziel"><b>Ziel: </b></label>
+        <label required for="ziel"><b>Ziel: </b></label>
         <input type="text" id="ziel" name="ziel" value="" onchange="ziel1()"
                style="text-align:center;"><br><br>
-        <div class="d"><label for="ab"><b>ab: </b></label>
+        <div class="d"><label required for="ab"><b>ab: </b></label>
             <input type="date" id="ab" name="ab" value="01.01.2022">
         </div>
         <script>
@@ -78,18 +82,20 @@
 
             <div class="container" style="text-align: center;"></div>
             <br>${message ! ''}</br>
-            <table>
+            <table style="background-color: gray">
 
-                <#list fahrten   as f  >
+                <#list fahrten as f  >
                     <tr style="background-color: white;">
                         <td style="width:400px;height:20px;text-align: center;">
-
+                            <a href='FahrtDetails'><img src="http://localhost:9109/icons/${f.transportmittel}.png"
+                                                             style="width:60px; height:30px;border:1px solid black; margin-top: 10px;" alt="${f.transportmittel}.png"></a>
                             <br>Von: ${f.startort ! 'keine'}<br>
                             <br>Nach: ${f.zielort ! 'keine'}<br>
                             <br>Kosten: ${f.fahrtkosten ! 'keine'}<br>
 
                         </td>
                     </tr>
+
                 </#list>
             </table>
         </div>
