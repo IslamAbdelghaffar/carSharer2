@@ -87,7 +87,7 @@
                 <#list fahrten as f  >
                     <tr style="background-color: white;">
                         <td style="width:400px;height:20px;text-align: center;">
-                            <a href='FahrtDetails'><img src="http://localhost:9109/icons/${f.transportmittel}.png"
+                            <a href='FahrtDetails?bid=${user}&fid=${f.fid}'><img src="http://localhost:9109/icons/${f.transportmittel}.png"
                                                              style="width:60px; height:30px;border:1px solid black; margin-top: 10px;" alt="${f.transportmittel}.png"></a>
                             <br>Von: ${f.startort ! 'keine'}<br>
                             <br>Nach: ${f.zielort ! 'keine'}<br>

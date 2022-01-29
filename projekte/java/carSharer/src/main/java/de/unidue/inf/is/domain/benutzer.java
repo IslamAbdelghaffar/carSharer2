@@ -9,7 +9,7 @@ public class benutzer {
      */
 
 
-   private static int  bid=3;
+   private static int  bid=2;
    private String name;
    private String email;
    private int fahrerlaubnisnummer;
