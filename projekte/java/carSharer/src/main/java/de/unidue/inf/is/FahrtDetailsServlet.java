@@ -1,25 +1,21 @@
 package de.unidue.inf.is;
 
-import de.unidue.inf.is.domain.Fahrt;
-import de.unidue.inf.is.domain.benutzer;
-import de.unidue.inf.is.domain.bewertung;
-import de.unidue.inf.is.domain.reservieren;
+import de.unidue.inf.is.domain.*;
 import de.unidue.inf.is.stores.FahrtDetailsStore;
 import de.unidue.inf.is.stores.FahrtReservierenStore;
-import org.omg.CORBA.Request;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FahrtDetailsServlet  extends HttpServlet {
     private static final long serialVersionUID = 1L;
     public static reservieren  neureservieren;
-    int user=5;
+
     /*do get responsible for show the content of fahrtdeatils page*/
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -44,18 +40,19 @@ public class FahrtDetailsServlet  extends HttpServlet {
             // Durschschnittsrating for fart = fid
             float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
-            /**bewertung request**/
+            /*bewertung request**/
             request.setAttribute("average",Durschschnittrating);
             request.setAttribute("benutzerBewertungEmail",benutzersemails);
             request.setAttribute("bewertung",bewertung);
 
-            /**aktionliste request**/
+            /*aktionliste request**/
             request.setAttribute("benutzer",benutzer);
-            request.setAttribute("user",user);
-            /**Informationen request**/
+            System.out.println("hi from fahtDetailServlet line 50, this is the driver email:  "+benutzer.getEmail());
+            request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
+            /*Informationen request**/
             request.setAttribute("FahrtDetails",fahrt);
 
-            /**forward all data to viewer**/
+            /*forward all data to viewer**/
             request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
             fahrtDetailsStore.complete();
         }
@@ -74,7 +71,7 @@ public class FahrtDetailsServlet  extends HttpServlet {
 
 
         if(request.getParameter("action").equals("reservieren")){
-            /***
+            /*
              * set anzahl to object neureservieren
              * **/
 
@@ -95,26 +92,32 @@ public class FahrtDetailsServlet  extends HttpServlet {
                     // Durschschnittsrating for fart = fid
                     float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
-                    /**bewertung request**/
+                    /*bewertung request**/
                     request.setAttribute("average",Durschschnittrating);
                     request.setAttribute("benutzerBewertungEmail",benutzersemails);
                     request.setAttribute("bewertung",bewertung);
 
-                    /**aktionliste request**/
+                    /*aktionliste request**/
                     request.setAttribute("benutzer",benutzer);
-                    request.setAttribute("user",user);
+                    request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
+                    System.out.println("Hi from FahrtDeatailsServlet: this is at line 102 benuterid "+de.unidue.inf.is.domain.benutzer.getBid());
 
-                    /**Informationen request**/
+
+                    /*Informationen request**/
                     request.setAttribute("FahrtDetails",fahrt);
 
-                    /**forward all data to viewer**/
-                    request.setAttribute("message","Succeed");
+                    /*forward all data to viewer**/
+                    request.setAttribute("message","Erfolgreich");
                     request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
                     fahrtDetailsStore.complete();
+
                 }
 
-            } else{
+            }
+
+            else{
                 try (FahrtDetailsStore fahrtDetailsStore=new FahrtDetailsStore()){
+
                     //Aktionenlist
                     Fahrt fahrt= fahrtDetailsStore.getFahrtDetails(neureservieren.getFahrt());
                     benutzer benutzer=fahrtDetailsStore.getBenutzer();
@@ -126,22 +129,23 @@ public class FahrtDetailsServlet  extends HttpServlet {
                     // Durschschnittsrating for fart = fid
                     float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
-                    /**bewertung request**/
+                    /*bewertung request**/
                     request.setAttribute("average",Durschschnittrating);
                     request.setAttribute("benutzerBewertungEmail",benutzersemails);
                     request.setAttribute("bewertung",bewertung);
 
-                    /**aktionliste request**/
+                    /*aktionliste request**/
                     request.setAttribute("benutzer",benutzer);
-                    request.setAttribute("user",user);
+                    request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
 
-                    /**Informationen request**/
+                    /*Informationen request**/
                     request.setAttribute("FahrtDetails",fahrt);
 
-                    /**forward all data to viewer**/
-                    request.setAttribute("message","Failed");
+                    /*forward all data to viewer**/
+                    request.setAttribute("message","fehlgeschlagen,Sie haben schon einmal reserviert oder Sie sind der ersteller der fahrt");
                     request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
-                    fahrtDetailsStore.complete();
+                    fahrtReservierenStore.complete();
+                    fahrtReservierenStore.close();
                 }
             }
         }
@@ -150,26 +154,30 @@ public class FahrtDetailsServlet  extends HttpServlet {
 
 
         else if(request.getParameter("action").equals("loeschen")){
-            /***
+            List<fahrerlaubnis> fahrerlaubnisse= new ArrayList<>();
+            /*
              * get fahrt id and benutzer id and anzahl von plaetze and save it
              * **/
 
             if(fahrtReservierenStore.FahrtLoeschen(neureservieren.getFahrt(),neureservieren.getKunde())){
                 try {
-
                     HauptSeiteServlet hauptSeiteServlet =new HauptSeiteServlet();
                     hauptSeiteServlet.doGet(request,response);
                     fahrtReservierenStore.complete();
+                    fahrtReservierenStore.close();
+
                 } catch (ServletException e) {
                     e.printStackTrace(); }
 
             }
             else
                 try {
-
                     HauptSeiteServlet hauptSeiteServlet =new HauptSeiteServlet();
+                    request.setAttribute("message", "fehlgeschlagen, Sie können diese Fahrt nicht löschen, Sie sind nicht der Ersteller");
                     hauptSeiteServlet.doGet(request,response);
                     fahrtReservierenStore.complete();
+                    fahrtReservierenStore.close();
+
                 } catch (ServletException e) {
                     e.printStackTrace(); }
         }

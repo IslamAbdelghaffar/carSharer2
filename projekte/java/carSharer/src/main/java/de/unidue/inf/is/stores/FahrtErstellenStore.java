@@ -15,15 +15,30 @@ public final class FahrtErstellenStore implements Closeable {
     public FahrtErstellenStore() throws StoreException {
         try {
             connection = DBUtil.getExternalConnection();
+            connection.setAutoCommit(false);
 
         }
         catch (SQLException e) {
             throw new StoreException(e);
         }
     }
-
+    /*  */
+    public boolean checkFahrerlaubnis(int fahrerid){
+        try (PreparedStatement preparedStatement=connection.prepareStatement("select f.fahrer from dbp109.fahrerlaubnis f where f.fahrer=?")){
+            preparedStatement.setInt(1,fahrerid);
+            ResultSet res=preparedStatement.executeQuery();
+            if(res.next()){
+                return true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println("you are not driver");
+        return false;
+    }
 
     public Fahrt FahrtErstellen(String Von,String Nach,String DateTime,int maxPlaetze,float fahrkosten,int anbieter,int Transportmittel,String Beschreibung) throws SQLException {
+    if(checkFahrerlaubnis(anbieter)){
         Fahrt fahrt=null;
         try(PreparedStatement preparedStatement=connection
                 .prepareStatement("INSERT INTO dbp109.fahrt (startort, zielort, fahrtdatumzeit, maxPlaetze, fahrtkosten, status, anbieter, transportmittel, beschreibung) values(?,?,?,?,?,?,?,?,?)")){
@@ -41,6 +56,8 @@ public final class FahrtErstellenStore implements Closeable {
             connection.commit();
             return fahrt;
         }
+    }
+    return null;
     }
 
     public void complete() {

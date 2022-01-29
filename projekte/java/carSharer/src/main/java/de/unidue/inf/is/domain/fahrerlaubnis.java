@@ -13,6 +13,11 @@ public class fahrerlaubnis {
         this.ablaufdatum = ablaufdatum;
     }
 
+    public fahrerlaubnis(int fahrer, int nummer) {
+        this.fahrer = fahrer;
+        this.nummer = nummer;
+    }
+
     public int getFahrer() {
         return fahrer;
     }

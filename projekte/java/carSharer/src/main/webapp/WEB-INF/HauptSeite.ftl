@@ -71,6 +71,7 @@
 <h2 style="font-family: courier;text-align: center; border-color: black;background-color:gray;color:white;">Meine
     reservierte Fahrten</h2>
 <div class="container" style="text-align: center;"></div>
+<br> ${message ! ''}</br>
 <form action="" onsubmit="submit()">
     <table align="center">
 

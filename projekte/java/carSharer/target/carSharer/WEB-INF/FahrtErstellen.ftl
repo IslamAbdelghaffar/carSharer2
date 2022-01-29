@@ -8,12 +8,12 @@
     <script src="../../../../../../../../../DB/Front%20end/functions.js"></script>
 </head>
 
-<body style="text-align: center; text-align-last:center;  ">
+<body style="text-align: center; text-align-last:center;position:relative;top:50px;  ">
 
 
-<h2 style="font-family:courier;">Fahrt erstellen </h2>
+<h2 style="font-family:courier;border:1px solid black;width:40%; background-color:gray;margin-left: 50%; margin-bottom:5px;position:relative;top:10px ">Fahrt erstellen </h2>
 
-<div class="container2">
+<div class="container2" style="border:1px solid black;background-color: gray; width:40%;margin-left: 50%;margin-top: 20px;">
     <form action="FahrtErstellen?action=FahrtErstellen" target="_self" method="post" onsubmit="submit()">
         <label for="von"> <b><br>Von:</b></label>
         <input type="text" id="von" name="von" value="Duisburg" style="text-align:center;"> <br><br>

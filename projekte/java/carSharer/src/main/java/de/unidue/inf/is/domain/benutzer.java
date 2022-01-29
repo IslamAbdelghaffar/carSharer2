@@ -9,14 +9,18 @@ public class benutzer {
      */
 
 
-    int bid;
-    String name;
-    String email;
+   private static int  bid=3;
+   private String name;
+   private String email;
+   private int fahrerlaubnisnummer;
+   private int fahererlaubnisAblaufdatum;
+
 
     public benutzer(int bid, String name, String email) {
         this.bid = bid;
         this.name = name;
         this.email = email;
+
     }
 
     public benutzer(int bid,String email) {
@@ -28,7 +32,7 @@ public class benutzer {
         this.email = email;
     }
 
-    public int getBid() {
+    public static int getBid() {
         return bid;
     }
 
@@ -51,7 +55,9 @@ public class benutzer {
     public void setEmail(String email) {
         this.email = email;
     }
-    public void hatFahrerlaubnis(){}
+    public void hatFahrerlaubnis(int numner){
+
+    }
     public void schreiben(){}
     public void erstellen(){}
     public void reservieren(){}

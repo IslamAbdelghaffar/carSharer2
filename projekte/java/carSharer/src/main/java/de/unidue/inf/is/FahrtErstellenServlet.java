@@ -1,5 +1,6 @@
 package de.unidue.inf.is;
 
+import de.unidue.inf.is.domain.benutzer;
 import de.unidue.inf.is.stores.FahrtErstellenStore;
 import de.unidue.inf.is.utils.DateTimeUtil;
 
@@ -34,7 +35,7 @@ public class FahrtErstellenServlet extends HttpServlet {
             if(request.getParameter("action").equals("FahrtErstellen")){
                 SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd.MM.yyyy");
 
-                int  anbieter=5;
+
                 String Von=request.getParameter("von");
                 String Nach=request.getParameter("nach");
                 int maxPlaetze=Integer.parseInt(request.getParameter("kapazität"));
@@ -53,12 +54,12 @@ public class FahrtErstellenServlet extends HttpServlet {
                 String DateTime = DateTimeUtil.convertDateAndTimeToDB2DateTime(outputText,request.getParameter("time"));
                 FahrtErstellenStore fahrtErstellenStore = new FahrtErstellenStore();
 /*************************************/
-                if(fahrtErstellenStore.FahrtErstellen( Von, Nach, DateTime, maxPlaetze, fahrkosten, anbieter, Transportmittel, Beschreibung) != null){
+                if(fahrtErstellenStore.FahrtErstellen(Von, Nach, DateTime, maxPlaetze, fahrkosten, benutzer.getBid(), Transportmittel, Beschreibung) != null){
                     request.setAttribute("message","erfolgreich");
                     request.getRequestDispatcher("FahrtErstellen.ftl").forward(request,response);
                     fahrtErstellenStore.complete();
                 }else {
-                    request.setAttribute("message","fehlgeschlagen");
+                    request.setAttribute("message","Fehlgeschlagen,Sie Sind Kein Fahrer ,Sie Besitzen Kein Fahrerlaubnis,Sie Können Nicht Ein Fahrt Erstelln");
                     request.getRequestDispatcher("FahrtErstellen.ftl").forward(request,response);
                     fahrtErstellenStore.complete();
                 }

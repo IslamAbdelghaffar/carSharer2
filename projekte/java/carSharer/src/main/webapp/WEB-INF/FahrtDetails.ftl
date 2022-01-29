@@ -44,7 +44,7 @@
 
 <div class="container2" style="text-align: center; border:1px solid black;align-items:center;background-color:rgb(224,222,222);width:40%;height:auto;margin-top: 10px;">
 
-    <p class="an"><b>Anbieter: </b>&ensp; d ${benutzer.email !'keine email'} </p>
+    <p class="an"><b>Anbieter: </b>&ensp;  ${benutzer.email !'keine email'} </p>
     <p class="fu"><b>fahrtdatum und -uhrzeit:</b> &ensp;${FahrtDetails.fahrtdatumzeit} </p>
     <p class="vo"> <b>von: </b>&ensp; ${FahrtDetails.startort ! 'keine'}</p>
     <p class="na"><b>Nach: </b>&ensp; ${FahrtDetails.zielort ! 'keine'}</p>
@@ -86,7 +86,7 @@
     <hr>
     <span class="BEW"><b>Bewertungen</b></span>&emsp;&emsp;
     <span>Durchschnittsrating:&ensp; 4,33 </span><br><br>
-    <table align="center">
+   <!-- <table align="center">
         <thead>
         <tr>
             <th>Benutzer</th>
@@ -95,7 +95,7 @@
         </tr>
         </thead>
         <tbody id="tableData"></tbody>
-    </table><br>
+    </table><br>-->
     <a href="FahrtBewerten?bid=${user}&fid=${FahrtDetails.fid}"
        style="background-color:black;Border-color:white;color:White; height:25px; width:100px; padding:5px 5px; text-decoration: none;"><b>Fahrt
             bewerten</b></a><br><br>
@@ -119,7 +119,22 @@
 
 </script>-->
 
+<table border="1" cellspacing="0" cellpadding="1">
+    <tr class="tableHeader">
+        <td>Benutzer</td>
+        <td>Beschreibung</td>
+        <td>Rating</td>
 
+    </tr>
+    <#foreach bewertung in bewertung>
+        <tr class="tableBody">
+            <td>'hello'</td>
+            <td>${bewertung.beschreibung ! '' }</td>
+            <td>${bewertung.rate ! '' }</td>
+
+        </tr>
+    </#foreach>
+</table>
 
 </body>
 

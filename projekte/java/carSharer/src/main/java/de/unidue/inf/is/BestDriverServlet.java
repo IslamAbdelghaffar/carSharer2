@@ -13,20 +13,20 @@ import java.util.List;
 
 public class BestDriverServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    int user=5;
+
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        /******* get data from store *********/
+        /* get data from store *********/
         benutzer benutzers=BestDriverStore.getInstance().getBestDriverEmail();
         List<Fahrt> fahrts = BestDriverStore.getInstance().BestDriverData();
         float average= BestDriverStore.getInstance().getAverage();
 
-        /*** send data to viewwe ****/
+        /* send data to viewwe ****/
 
         request.setAttribute("benutzers",benutzers);
         request.setAttribute("fahrts",fahrts);
         request.setAttribute("average",average);
-        request.setAttribute("user",user);
+        request.setAttribute("user",benutzer.getBid());
 
         request.getRequestDispatcher("BestDriver.ftl").forward(request,response);
         BestDriverStore.getInstance().complete();

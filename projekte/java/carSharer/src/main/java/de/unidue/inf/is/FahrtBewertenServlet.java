@@ -53,9 +53,10 @@ public class FahrtBewertenServlet extends HttpServlet {
                     try {
                         //set request attributes
 
-                        request.setAttribute("message", "you rated successfully");
+                        request.setAttribute("message", "erfolgreich");
                         // Dispatch request to template engine
                         request.getRequestDispatcher("FahrtBewerten.ftl").forward(request, response);
+                        fahrtBewrtenStore.complete();
                     } catch (ServletException | IOException e) {
                         e.printStackTrace();
                     }
@@ -66,9 +67,10 @@ public class FahrtBewertenServlet extends HttpServlet {
                     try {
                         //set request attributes
 
-                        request.setAttribute("message", "the Rating Process failed");
+                        request.setAttribute("message", "Der Bewertungsprozess ist fehlgeschlagen,Sie haben schon einmal bewertet oder Sie sind der ersteller der fahrt");
                         // Dispatch request to template engine
                         request.getRequestDispatcher("FahrtBewerten.ftl").forward(request, response);
+                        fahrtBewrtenStore.close();
                     } catch (ServletException | IOException e) {
                         e.printStackTrace();
                     }

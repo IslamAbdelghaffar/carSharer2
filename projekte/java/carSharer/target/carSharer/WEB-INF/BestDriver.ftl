@@ -23,12 +23,12 @@
     table {
         display: table;
         border-collapse: separate;
-        background-color: rgb(224, 222, 222);
+        background-color: gray;
         border-spacing: 50px;
     }
 
     body {
-        background-color: white;
+        background:white;
         border: 3px solid black;
         max-width: 500px;
         height: auto;
@@ -39,10 +39,10 @@
 
 
 
-<body style="background-color: lightgoldenrodyellow; margin-top: 70px;">
+<body style="background-color: white; margin-top: 70px;">
 
 
-<div style="background-color: rgb(224, 222, 222); padding-top: 20px; text-align: center;">
+<div style="background-color: white; padding-top: 20px; text-align: center;">
     <form action='HauptSeite' onsubmit="submit()">
         <input value="Home" type="submit"
                style="background-color: black;border-color: white;color:white;text-align: center; width:100px;height:20px;margin-bottom: 20px;">

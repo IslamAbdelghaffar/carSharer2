@@ -3,6 +3,7 @@ package de.unidue.inf.is.stores;
 import de.unidue.inf.is.domain.Fahrt;
 import de.unidue.inf.is.domain.benutzer;
 import de.unidue.inf.is.domain.bewertung;
+import de.unidue.inf.is.domain.fahrerlaubnis;
 import de.unidue.inf.is.utils.DBUtil;
 import de.unidue.inf.is.utils.DateTimeUtil;
 
@@ -26,6 +27,9 @@ public final class FahrtDetailsStore implements Closeable {
         return benutzer;
     }
 
+
+
+
     public List<de.unidue.inf.is.domain.benutzer> getBenutzers() {
         return benutzers;
     }
@@ -44,7 +48,7 @@ public final class FahrtDetailsStore implements Closeable {
         Fahrt fahrt = null;
         try{
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("SELECT f.FID,f.STARTORT,f.ZIELORT,f.FAHRTDATUMZEIT,f.MAXPLAETZE,r.anzPlaetze,f.FAHRTKOSTEN,f.STATUS,f.ANBIETER,b.email,f.BESCHREIBUNG from dbp109.fahrt f left JOIN (SELECT fahrt,count(anzPlaetze)AS anzPlaetze FROM dbp109.reservieren r GROUP BY fahrt)r ON f.fid=r.fahrt INNER JOIN dbp109.benutzer b ON f.ANBIETER=b.bid where f.fid=?");
+                    .prepareStatement("SELECT f.FID,f.STARTORT,f.ZIELORT,f.FAHRTDATUMZEIT,f.MAXPLAETZE,r.anzPlaetze,f.FAHRTKOSTEN,f.STATUS,f.ANBIETER,b.email,f.BESCHREIBUNG from dbp109.fahrt f left JOIN (SELECT fahrt,sum(anzPlaetze)AS anzPlaetze FROM dbp109.reservieren r GROUP BY fahrt)r ON f.fid=r.fahrt INNER JOIN dbp109.benutzer b ON f.ANBIETER=b.bid where f.fid=?");
             preparedStatement.setInt(1,Fid);
             ResultSet Res =preparedStatement.executeQuery();
             try {
@@ -59,9 +63,8 @@ public final class FahrtDetailsStore implements Closeable {
                         Res.getString("BESCHREIBUNG"),
                         (Res.getInt("MAXPLAETZE")-Res.getInt("ANZPLAETZE")));
                 System.out.println(fahrt.getBeschreibung());
-                benutzer = new benutzer(Res.getInt("ANBIETER"),Res.getString("EMAIL"));
-                System.out.println("hello from store in side db"+ Res.getString("EMAIL"));
-                System.out.println("hello from store"+ benutzer.getEmail());
+                benutzer = new benutzer(Res.getString("EMAIL"));
+                System.out.println("hello from fahrt details store this is the email of anbieter of the fahrt: "+ benutzer.getEmail());
                 return fahrt;
 
             } catch (SQLException throwables) {
@@ -111,9 +114,14 @@ public final class FahrtDetailsStore implements Closeable {
         return avg;
     }
 
+
+
     public void complete() {
         complete = true;
     }
+
+
+
     @Override
     public void close() throws IOException {
         if (connection != null) {

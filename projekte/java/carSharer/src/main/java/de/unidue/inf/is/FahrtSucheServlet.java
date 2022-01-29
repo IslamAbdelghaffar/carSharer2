@@ -1,6 +1,7 @@
 package de.unidue.inf.is;
 
 import de.unidue.inf.is.domain.Fahrt;
+import de.unidue.inf.is.domain.benutzer;
 import de.unidue.inf.is.stores.FahrtSucheStore;
 import de.unidue.inf.is.utils.DateTimeUtil;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class FahrtSucheServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    int user=5;
+
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
@@ -58,7 +59,7 @@ public class FahrtSucheServlet extends HttpServlet {
         if(fahrten.size() != 0){
 
             request.setAttribute("fahrten",fahrten);
-            request.setAttribute("user",user);
+            request.setAttribute("user", benutzer.getBid());
             //  request.setAttribute("message","suc");
             request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);
 
