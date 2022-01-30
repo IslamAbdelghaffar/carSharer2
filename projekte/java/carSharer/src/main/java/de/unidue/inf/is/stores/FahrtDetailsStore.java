@@ -54,7 +54,7 @@ public final class FahrtDetailsStore implements Closeable {
                         Res.getInt("FID"),
                         Res.getString("STARTORT"),
                         Res.getString("ZIELORT"),
-                        (DateTimeUtil.extractDateFromDB2DateTimeString (Res.getString("FAHRTDATUMZEIT"))+ " "+ DateTimeUtil.extractTimeFromDB2DateTimeString (Res.getString("FAHRTDATUMZEIT"))),
+                        (DateTimeUtil.extractDateFromDB2DateTimeString (Res.getString("FAHRTDATUMZEIT"))+"    "+ DateTimeUtil.extractTimeFromDB2DateTimeString (Res.getString("FAHRTDATUMZEIT"))),
                         Res.getFloat("FAHRTKOSTEN"),
                         Res.getString("STATUS"),
                         Res.getString("BESCHREIBUNG"),
@@ -81,7 +81,7 @@ public final class FahrtDetailsStore implements Closeable {
     public List<Rate> getbewertung(int fid){
         List<Rate> Rates=new ArrayList<>();
         try (PreparedStatement preparedStatement=connection.
-                prepareStatement("SELECT RATING,EMAIL,TEXTNACHRICHT FROM dbp109.bewertung r INNER JOIN dbp109.schreiben s ON s.bewertung=r.beid INNER JOIN dbp109.benutzer b ON s.benutzer=b.bid where FAHRT=?")){
+                prepareStatement("SELECT RATING,EMAIL,TEXTNACHRICHT FROM dbp109.bewertung r INNER JOIN dbp109.schreiben s ON s.bewertung=r.beid INNER JOIN dbp109.benutzer b ON s.benutzer=b.bid where FAHRT=? order by bewertung DESC")){
             preparedStatement.setInt(1,fid);
             ResultSet Res=preparedStatement.executeQuery();
             while (Res.next()){

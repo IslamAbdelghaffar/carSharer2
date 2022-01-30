@@ -65,7 +65,6 @@ public class FahrtDetailsServlet  extends HttpServlet {
            request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
            /*Informationen request**/
            request.setAttribute("FahrtDetails",fahrt);
-           System.out.println("this is the rate:  "+Rates.get(0).getRate());
 
            /*forward all data to viewer**/
            request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
@@ -99,7 +98,6 @@ public class FahrtDetailsServlet  extends HttpServlet {
               request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
               /*Informationen request**/
               request.setAttribute("FahrtDetails",fahrt);
-              System.out.println("this is the rate:  "+Rates.get(0).getRate());
 
               /*forward all data to viewer**/
               request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
@@ -151,7 +149,6 @@ public class FahrtDetailsServlet  extends HttpServlet {
                     /*aktionliste request**/
                     request.setAttribute("benutzer",benutzer);
                     request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
-                    System.out.println("this is the rate:  "+Rates.get(0).getRate());
 
                     /*Informationen request**/
                     request.setAttribute("FahrtDetails",fahrt);
