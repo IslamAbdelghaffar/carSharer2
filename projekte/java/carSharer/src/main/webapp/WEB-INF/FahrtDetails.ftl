@@ -25,7 +25,7 @@
 
     .table {
         text-align: "center";
-        width: 160px;
+        width: 300px;
         padding-left: 50px;
         margin: 10px;
 
@@ -78,80 +78,40 @@
 
 
     <hr>
-    <span class="BEW"><b>Bewertungen</b></span>&emsp;&emsp;
+
+
+    <span class="BEW"><b>Bewertungen</b></span>&emsp;&emsp;&emsp;&emsp;&emsp;
     <span>Durchschnittsrating:&ensp; 4,33 </span><br><br>
 
+
+
+
+    <table align="center">
+        <thead>
+        <tr>
+            <th>Benutzer</th>
+            <th>Beschreibung</th>
+            <th>Rating</th>
+        </tr>
+
+        <#list Rates as R>
+
+            <tr>
+                <th>${R.benutzerEmail !''}</th>
+                <th>${R.beschreibung ! ''}</th>
+                <th>${R.rate !''}</th>
+            </tr>
+        </#list>
+        </thead>
+
+        <tbody id="tableData"></tbody>
+    </table><br>
     <a href="FahrtBewerten?bid=${user}&fid=${FahrtDetails.fid}"
        style="background-color:black;Border-color:white;color:White; height:25px; width:100px; padding:5px 5px; text-decoration: none;"><b>Fahrt
             bewerten</b></a><br><br>
 </div>
 
-<span class="BEW"><b>Bewertungen</b></span>&emsp;&emsp;&emsp;&emsp;&emsp;
-<span>Durchschnittsrating:&ensp; 4,33 </span><br><br>
-<table align="center" style="position:relative;right:600px">
-    <thead>
 
-          </table><br>
-
-            <table  align="center" style="position:relative;right:500px">
-
-                <thead>
-                    <tr>
-                        <th>Benutzer</th>
-                        <th>Beschreibung</th>
-                        <th>Rating</th>
-                    </tr>
-                </thead>
-
-            </table><br>
-
-
-<script>
-       <#list bewertung as b>
-    let sortDirection = false;
-    let personData = [
-
-        { Beschreibung: '${b.textnachricht !''}', Rating: ${b.rating !''} },
-    ];
-    window.onload = () => { loadTableData(personData); };
-
-
-    function loadTableData(personData) {
-        const Tablebody = document.getElementById('tableData');
-        let DataHTM1 = ''
-        for (let person of personData) {
-            DataHTM1 +=  "</td><td>"+person.Beschreibung+"</td><td>"+person.Rating+"</td></tr>";
-        }
-        console.log(DataHTM1);
-        Tablebody.innerHTML = DataHTM1;
-    }
-
-    </#list>
-</script>
-
-<script>
-    <#list benutzer as b>
-    let sortDirection = false;
-    let personData = [
-
-        { Benutzer: 'ehlo' },
-    ];
-    window.onload = () => { loadTableData(personData); };
-
-
-    function loadTableData(personData) {
-        const Tablebody = document.getElementById('tableData');
-        let DataHTM1 = ''
-        for (let person of personData) {
-            DataHTM1 += "<tr><td>" + person.Benutzer + "</td><td>";
-        }
-        console.log(DataHTM1);
-        Tablebody.innerHTML = DataHTM1;
-    }
-
-    </#list>
-
-</script>
 
 <pt>
 

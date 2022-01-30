@@ -47,17 +47,16 @@ public class FahrtDetailsServlet  extends HttpServlet {
            Fahrt fahrt= fahrtDetailsStore.getFahrtDetails(neureservieren.getFahrt());
            benutzer benutzer=fahrtDetailsStore.getBenutzer();
            //bewertung
-           List<bewertung> bewertung=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
+           List<Rate> Rates=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
 
            // contains user's email in the same order as bewertungen
-           List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
+          // List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
            // Durschschnittsrating for fart = fid
            float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
            /*bewertung request**/
            request.setAttribute("average",Durschschnittrating);
-           request.setAttribute("benutzerBewertungEmail",benutzersemails);
-           request.setAttribute("bewertung",bewertung);
+           request.setAttribute("Rates",Rates);
 
            /*aktionliste request**/
            request.setAttribute("benutzer",benutzer);
@@ -66,6 +65,7 @@ public class FahrtDetailsServlet  extends HttpServlet {
            request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
            /*Informationen request**/
            request.setAttribute("FahrtDetails",fahrt);
+           System.out.println("this is the rate:  "+Rates.get(0).getRate());
 
            /*forward all data to viewer**/
            request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
@@ -80,17 +80,17 @@ public class FahrtDetailsServlet  extends HttpServlet {
               Fahrt fahrt= fahrtDetailsStore.getFahrtDetails(neureservieren.getFahrt());
               benutzer benutzer=fahrtDetailsStore.getBenutzer();
               //bewertung
-              List<bewertung> bewertung=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
+              List<Rate> Rates=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
 
               // contains user's email in the same order as bewertungen
-              List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
+            // List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
               // Durschschnittsrating for fart = fid
               float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
               /*bewertung request**/
               request.setAttribute("average",Durschschnittrating);
-              request.setAttribute("benutzerBewertungEmail",benutzersemails);
-              request.setAttribute("bewertung",bewertung);
+            //  request.setAttribute("benutzerBewertungEmail",benutzersemails);
+              request.setAttribute("Rates",Rates );
 
               /*aktionliste request**/
               request.setAttribute("benutzer",benutzer);
@@ -99,6 +99,7 @@ public class FahrtDetailsServlet  extends HttpServlet {
               request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
               /*Informationen request**/
               request.setAttribute("FahrtDetails",fahrt);
+              System.out.println("this is the rate:  "+Rates.get(0).getRate());
 
               /*forward all data to viewer**/
               request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
@@ -135,23 +136,22 @@ public class FahrtDetailsServlet  extends HttpServlet {
                     Fahrt fahrt= fahrtDetailsStore.getFahrtDetails(neureservieren.getFahrt());
                     benutzer benutzer=fahrtDetailsStore.getBenutzer();
                     //bewertung
-                    List<bewertung> bewertung=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
+                    List<Rate> Rates=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
 
                     // contains user's email in the same order as bewertungen
-                    List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
+                  //  List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
                     // Durschschnittsrating for fart = fid
                     float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
                     /*bewertung request**/
                     request.setAttribute("average",Durschschnittrating);
-                    request.setAttribute("benutzerBewertungEmail",benutzersemails);
-                    request.setAttribute("bewertung",bewertung);
+                    //request.setAttribute("benutzerBewertungEmail",benutzersemails);
+                    request.setAttribute("Rates",Rates);
 
                     /*aktionliste request**/
                     request.setAttribute("benutzer",benutzer);
                     request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
-                    System.out.println("Hi from FahrtDeatailsServlet: this is at line 102 benuterid "+de.unidue.inf.is.domain.benutzer.getBid());
-
+                    System.out.println("this is the rate:  "+Rates.get(0).getRate());
 
                     /*Informationen request**/
                     request.setAttribute("FahrtDetails",fahrt);
@@ -172,17 +172,17 @@ public class FahrtDetailsServlet  extends HttpServlet {
                     Fahrt fahrt= fahrtDetailsStore.getFahrtDetails(neureservieren.getFahrt());
                     benutzer benutzer=fahrtDetailsStore.getBenutzer();
                     //bewertung
-                    List<bewertung> bewertung=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
+                    List<Rate> Rates=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
 
                     // contains user's email in the same order as bewertungen
-                    List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
+                   // List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
                     // Durschschnittsrating for fart = fid
                     float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
                     /*bewertung request**/
                     request.setAttribute("average",Durschschnittrating);
-                    request.setAttribute("benutzerBewertungEmail",benutzersemails);
-                    request.setAttribute("bewertung",bewertung);
+                    //request.setAttribute("benutzerBewertungEmail",benutzersemails);
+                    request.setAttribute("Rates",Rates);
 
                     /*aktionliste request**/
                     request.setAttribute("benutzer",benutzer);

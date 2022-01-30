@@ -1,9 +1,6 @@
 package de.unidue.inf.is.stores;
 
-import de.unidue.inf.is.domain.Fahrt;
-import de.unidue.inf.is.domain.benutzer;
-import de.unidue.inf.is.domain.bewertung;
-import de.unidue.inf.is.domain.fahrerlaubnis;
+import de.unidue.inf.is.domain.*;
 import de.unidue.inf.is.utils.DBUtil;
 import de.unidue.inf.is.utils.DateTimeUtil;
 
@@ -78,24 +75,23 @@ public final class FahrtDetailsStore implements Closeable {
     }
 
     // queries for bewertungen (email comment rate)
-    public List<bewertung> getbewertung(int fid){
-        List<bewertung> bewertungs=new ArrayList<>();
+    public List<Rate> getbewertung(int fid){
+        List<Rate> Rates=new ArrayList<>();
         try (PreparedStatement preparedStatement=connection.
                 prepareStatement("SELECT RATING,EMAIL,TEXTNACHRICHT FROM dbp109.bewertung r INNER JOIN dbp109.schreiben s ON s.bewertung=r.beid INNER JOIN dbp109.benutzer b ON s.benutzer=b.bid where FAHRT=?")){
             preparedStatement.setInt(1,fid);
             ResultSet Res=preparedStatement.executeQuery();
             while (Res.next()){
-                bewertung bewertung=new bewertung(Res.getString("TEXTNACHRICHT"),
-                        Res.getInt("RATING"));
-                bewertungs.add(bewertung);
-                benutzer benutzer2=new benutzer(Res.getString("Email"));
-                benutzers.add(benutzer2);
+                Rate rate=new Rate(Res.getString("Email"), Res.getString("TEXTNACHRICHT"),Res.getInt("RATING"));
+
+                Rates.add(rate);
+
             }
-            return bewertungs;
+            return Rates;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return bewertungs;
+        return Rates;
     }
 
     // query for durschschnittrating
