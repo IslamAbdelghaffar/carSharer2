@@ -49,7 +49,7 @@ public class Fahrt {
         this.transportmittel=transportmittel;
     }
     // constructor for fahrt details
-    public Fahrt(int fid,String startort, String zielort, String fahrtdatumzeit, float fahrtkosten, String status, String beschreibung, int freierPlaetze) {
+    public Fahrt(int fid,String startort, String zielort, String fahrtdatumzeit, float fahrtkosten, String status, String beschreibung, int freierPlaetze,int Transportmittel) {
         this.Fid=fid;
         this.startort = startort;
         this.zielort = zielort;
@@ -58,6 +58,7 @@ public class Fahrt {
         this.status = status;
         this.beschreibung = beschreibung;
         this.freierPlaetze = freierPlaetze;
+        this.transportmittel=Transportmittel;
     }
 // constr. for fartSuche
     public Fahrt(int fid,String startort, String zielort, float fahrtkosten,int transportmittel) {

@@ -44,6 +44,8 @@
 
 <div class="container2" style="text-align: center; border:1px solid black;align-items:center;background-color:rgb(224,222,222);width:40%;height:auto;margin-top: 10px;">
 
+    <a href=''><img src="http://localhost:9109/icons/${FahrtDetails.transportmittel}.png"
+                                                         style="width:60px; height:30px;border:1px solid black; margin-top: 10px;" alt="${FahrtDetails.transportmittel}.png"></a>
     <p class="an"><b>Anbieter: </b>&ensp;  ${benutzer.email !'keine email'} </p>
     <p class="fu"><b>fahrtdatum und -uhrzeit:</b> &ensp;${FahrtDetails.fahrtdatumzeit} </p>
     <p class="vo"> <b>von: </b>&ensp; ${FahrtDetails.startort ! 'keine'}</p>

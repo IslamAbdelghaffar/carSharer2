@@ -45,7 +45,7 @@ public final class FahrtDetailsStore implements Closeable {
         Fahrt fahrt = null;
         try{
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("SELECT f.FID,f.STARTORT,f.ZIELORT,f.FAHRTDATUMZEIT,f.MAXPLAETZE,r.anzPlaetze,f.FAHRTKOSTEN,f.STATUS,f.ANBIETER,b.email,f.BESCHREIBUNG from dbp109.fahrt f left JOIN (SELECT fahrt,sum(anzPlaetze)AS anzPlaetze FROM dbp109.reservieren r GROUP BY fahrt)r ON f.fid=r.fahrt INNER JOIN dbp109.benutzer b ON f.ANBIETER=b.bid where f.fid=?");
+                    .prepareStatement("SELECT f.transportmittel,f.FID,f.STARTORT,f.ZIELORT,f.FAHRTDATUMZEIT,f.MAXPLAETZE,r.anzPlaetze,f.FAHRTKOSTEN,f.STATUS,f.ANBIETER,b.email,f.BESCHREIBUNG from dbp109.fahrt f left JOIN (SELECT fahrt,sum(anzPlaetze)AS anzPlaetze FROM dbp109.reservieren r GROUP BY fahrt)r ON f.fid=r.fahrt INNER JOIN dbp109.benutzer b ON f.ANBIETER=b.bid where f.fid=?");
             preparedStatement.setInt(1,Fid);
             ResultSet Res =preparedStatement.executeQuery();
             try {
@@ -54,14 +54,17 @@ public final class FahrtDetailsStore implements Closeable {
                         Res.getInt("FID"),
                         Res.getString("STARTORT"),
                         Res.getString("ZIELORT"),
-                        DateTimeUtil.extractDateFromDB2DateTimeString (Res.getString("FAHRTDATUMZEIT")),
+                        (DateTimeUtil.extractDateFromDB2DateTimeString (Res.getString("FAHRTDATUMZEIT"))+ " "+ DateTimeUtil.extractTimeFromDB2DateTimeString (Res.getString("FAHRTDATUMZEIT"))),
                         Res.getFloat("FAHRTKOSTEN"),
                         Res.getString("STATUS"),
                         Res.getString("BESCHREIBUNG"),
-                        (Res.getInt("MAXPLAETZE")-Res.getInt("ANZPLAETZE")));
+                        (Res.getInt("MAXPLAETZE")-Res.getInt("ANZPLAETZE")),
+                        Res.getInt("Transportmittel"));
                 System.out.println(fahrt.getBeschreibung());
                 benutzer = new benutzer(Res.getString("EMAIL"));
                 System.out.println("hello from fahrt details store this is the email of anbieter of the fahrt: "+ benutzer.getEmail());
+                System.out.println("time:  "+ DateTimeUtil.extractTimeFromDB2DateTimeString (Res.getString("FAHRTDATUMZEIT")+"date:  "+
+                        DateTimeUtil.extractDateFromDB2DateTimeString(Res.getString("FAHRTDATUMZEIT"))));
                 return fahrt;
 
             } catch (SQLException throwables) {
