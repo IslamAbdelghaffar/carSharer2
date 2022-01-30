@@ -75,66 +75,86 @@
 
     <br>${message ! ''}<br>
 
-    <!--   <script>
-        function myFunction() {
-            document.getElementById("demo").innerHTML = "gelöscht!";
-        }
-    </script> -->
-
 
 
     <hr>
     <span class="BEW"><b>Bewertungen</b></span>&emsp;&emsp;
     <span>Durchschnittsrating:&ensp; 4,33 </span><br><br>
-   <!-- <table align="center">
-        <thead>
-        <tr>
-            <th>Benutzer</th>
-            <th>Beschreibung</th>
-            <th>Rating</th>
-        </tr>
-        </thead>
-        <tbody id="tableData"></tbody>
-    </table><br>-->
+
     <a href="FahrtBewerten?bid=${user}&fid=${FahrtDetails.fid}"
        style="background-color:black;Border-color:white;color:White; height:25px; width:100px; padding:5px 5px; text-decoration: none;"><b>Fahrt
             bewerten</b></a><br><br>
 </div>
-<!--<script>
-    function required() {
-        var empt = document.form1.quantity.value;
-        if (empt === "") {
-            alert("bitte eine zahl eingeben");
-            return false;
+
+<span class="BEW"><b>Bewertungen</b></span>&emsp;&emsp;&emsp;&emsp;&emsp;
+<span>Durchschnittsrating:&ensp; 4,33 </span><br><br>
+<table align="center" style="position:relative;right:600px">
+    <thead>
+
+          </table><br>
+
+            <table  align="center" style="position:relative;right:500px">
+
+                <thead>
+                    <tr>
+                        <th>Benutzer</th>
+                        <th>Beschreibung</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+
+            </table><br>
+
+
+<script>
+       <#list bewertung as b>
+    let sortDirection = false;
+    let personData = [
+
+        { Beschreibung: '${b.textnachricht !''}', Rating: ${b.rating !''} },
+    ];
+    window.onload = () => { loadTableData(personData); };
+
+
+    function loadTableData(personData) {
+        const Tablebody = document.getElementById('tableData');
+        let DataHTM1 = ''
+        for (let person of personData) {
+            DataHTM1 +=  "</td><td>"+person.Beschreibung+"</td><td>"+person.Rating+"</td></tr>";
         }
-        else if (empt < 1 && empt > 2) {
-            alert("bitte entweder 1 oder zwei eingeben!");
-        }
-        else {
-            alert('erfolgreiche Reservierung');
-            return true;
-        }
+        console.log(DataHTM1);
+        Tablebody.innerHTML = DataHTM1;
     }
 
+    </#list>
+</script>
 
-</script>-->
+<script>
+    <#list benutzer as b>
+    let sortDirection = false;
+    let personData = [
 
-<table border="1" cellspacing="0" cellpadding="1">
-    <tr class="tableHeader">
-        <td>Benutzer</td>
-        <td>Beschreibung</td>
-        <td>Rating</td>
+        { Benutzer: 'ehlo' },
+    ];
+    window.onload = () => { loadTableData(personData); };
 
-    </tr>
-    <#foreach bewertung in bewertung>
-        <tr class="tableBody">
-            <td>'hello'</td>
-            <td>${bewertung.beschreibung ! '' }</td>
-            <td>${bewertung.rate ! '' }</td>
 
-        </tr>
-    </#foreach>
-</table>
+    function loadTableData(personData) {
+        const Tablebody = document.getElementById('tableData');
+        let DataHTM1 = ''
+        for (let person of personData) {
+            DataHTM1 += "<tr><td>" + person.Benutzer + "</td><td>";
+        }
+        console.log(DataHTM1);
+        Tablebody.innerHTML = DataHTM1;
+    }
+
+    </#list>
+
+</script>
+
+<pt>
+
 
 </body>
 

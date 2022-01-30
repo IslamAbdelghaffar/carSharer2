@@ -53,9 +53,17 @@ public class FahrtBewertenServlet extends HttpServlet {
                     try {
                         //set request attributes
 
-                        request.setAttribute("message", "erfolgreich");
+                    //    request.setAttribute("message", "erfolgreich");
                         // Dispatch request to template engine
-                        request.getRequestDispatcher("FahrtBewerten.ftl").forward(request, response);
+
+                        request.setAttribute("bid",schreiben.getBenutzer());
+                        request.setAttribute("fid",schreiben.getFahrt());
+
+                        int bid= (int)request.getAttribute("bid");
+                        System.out.println("bid after casting"+bid);
+                       System.out.println("bid"+schreiben.getBenutzer());
+                        System.out.println("fid"+schreiben.getFahrt());
+                        request.getRequestDispatcher("FahrtDetails").forward(request, response);
                         fahrtBewrtenStore.complete();
                     } catch (ServletException | IOException e) {
                         e.printStackTrace();

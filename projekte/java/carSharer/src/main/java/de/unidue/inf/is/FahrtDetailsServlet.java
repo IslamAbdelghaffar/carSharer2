@@ -15,6 +15,8 @@ import java.util.List;
 public class FahrtDetailsServlet  extends HttpServlet {
     private static final long serialVersionUID = 1L;
     public static reservieren  neureservieren;
+    public static reservieren  neureservieren2;
+
 
     /*do get responsible for show the content of fahrtdeatils page*/
     @Override
@@ -22,39 +24,87 @@ public class FahrtDetailsServlet  extends HttpServlet {
             throws ServletException, IOException {
 
         try (FahrtDetailsStore fahrtDetailsStore=new FahrtDetailsStore()){
+            int fid = 0;
+            int bid = 0;
             /* get farht id and benutzer id and save them */
-            //System.out.println("bid:   "+neureservieren.getKunde()+"/"+neureservieren.getFahrt());
+         //   System.out.println("bid:   "+neureservieren.getKunde()+"/"+neureservieren.getFahrt());
 
-            neureservieren = new reservieren(Integer.parseInt(request.getParameter("fid")),Integer.parseInt(request.getParameter("bid")));
+             // I fatch bid for aktionsliste part, and fid for fahrt details part
+            System.out.println(request.getParameter("fid"));
+            System.out.println(request.getParameter("bid"));
+            try {
+                 fid= (int)request.getAttribute("fid");
+                System.out.println("bid after casting:  "+fid);
+                 bid= (int)request.getAttribute("bid");
+                System.out.println("bid after casting:  "+bid);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+       if(fid !=0 && bid != 0){
+           neureservieren = new reservieren(fid,bid);
 
+           //Aktionenlist
+           Fahrt fahrt= fahrtDetailsStore.getFahrtDetails(neureservieren.getFahrt());
+           benutzer benutzer=fahrtDetailsStore.getBenutzer();
+           //bewertung
+           List<bewertung> bewertung=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
 
+           // contains user's email in the same order as bewertungen
+           List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
+           // Durschschnittsrating for fart = fid
+           float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
-            //Aktionenlist
-            Fahrt fahrt= fahrtDetailsStore.getFahrtDetails(neureservieren.getFahrt());
-            benutzer benutzer=fahrtDetailsStore.getBenutzer();
-            //bewertung
-            List<bewertung> bewertung=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
+           /*bewertung request**/
+           request.setAttribute("average",Durschschnittrating);
+           request.setAttribute("benutzerBewertungEmail",benutzersemails);
+           request.setAttribute("bewertung",bewertung);
 
-            // contains user's email in the same order as bewertungen
-            List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
-            // Durschschnittsrating for fart = fid
-            float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
+           /*aktionliste request**/
+           request.setAttribute("benutzer",benutzer);
+           System.out.println("hi :  *****"+benutzer.getEmail());
+           System.out.println("hi from fahtDetailServlet line 50, this is the driver email:  "+benutzer.getEmail());
+           request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
+           /*Informationen request**/
+           request.setAttribute("FahrtDetails",fahrt);
 
-            /*bewertung request**/
-            request.setAttribute("average",Durschschnittrating);
-            request.setAttribute("benutzerBewertungEmail",benutzersemails);
-            request.setAttribute("bewertung",bewertung);
+           /*forward all data to viewer**/
+           request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
+           fahrtDetailsStore.complete();
+            }
 
-            /*aktionliste request**/
-            request.setAttribute("benutzer",benutzer);
-            System.out.println("hi from fahtDetailServlet line 50, this is the driver email:  "+benutzer.getEmail());
-            request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
-            /*Informationen request**/
-            request.setAttribute("FahrtDetails",fahrt);
+         else
+          {
+              neureservieren = new reservieren(Integer.parseInt(request.getParameter("fid")),Integer.parseInt(request.getParameter("bid")));
 
-            /*forward all data to viewer**/
-            request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
-            fahrtDetailsStore.complete();
+              //Aktionenlist
+              Fahrt fahrt= fahrtDetailsStore.getFahrtDetails(neureservieren.getFahrt());
+              benutzer benutzer=fahrtDetailsStore.getBenutzer();
+              //bewertung
+              List<bewertung> bewertung=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
+
+              // contains user's email in the same order as bewertungen
+              List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
+              // Durschschnittsrating for fart = fid
+              float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
+
+              /*bewertung request**/
+              request.setAttribute("average",Durschschnittrating);
+              request.setAttribute("benutzerBewertungEmail",benutzersemails);
+              request.setAttribute("bewertung",bewertung);
+
+              /*aktionliste request**/
+              request.setAttribute("benutzer",benutzer);
+              System.out.println("hi :  *****"+benutzer.getEmail());
+              System.out.println("hi from fahtDetailServlet line 50, this is the driver email:  "+benutzer.getEmail());
+              request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
+              /*Informationen request**/
+              request.setAttribute("FahrtDetails",fahrt);
+
+              /*forward all data to viewer**/
+              request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
+              fahrtDetailsStore.complete();
+          }
+
         }
     }
 
@@ -145,7 +195,7 @@ public class FahrtDetailsServlet  extends HttpServlet {
                     request.setAttribute("message","fehlgeschlagen,Sie haben schon einmal reserviert oder Sie sind der ersteller der fahrt");
                     request.getRequestDispatcher("FahrtDetails.ftl").forward(request, response);
                     fahrtReservierenStore.complete();
-                    fahrtReservierenStore.close();
+
                 }
             }
         }
@@ -183,6 +233,8 @@ public class FahrtDetailsServlet  extends HttpServlet {
         }
 
         else
+            System.out.println(request.getAttribute("fid"));
+            System.out.println(request.getAttribute("bid"));
             doGet(request,response);
 
 

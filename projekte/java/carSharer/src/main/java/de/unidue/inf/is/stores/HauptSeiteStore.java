@@ -81,7 +81,7 @@ public final class HauptSeiteStore implements Closeable {
         List<Fahrt> offeneFahrten = new ArrayList<>();
         try {
             PreparedStatement preparedStatement=connection
-                    .prepareStatement("select f.transportmittel,f.fid,f.STARTORT,f.zielort,f.STATUS,f.maxPlaetze,f.fahrtkosten, r.anzPlaetze FROM dbp109.fahrt f left JOIN (SELECT fahrt,count(anzPlaetze)AS anzPlaetze FROM dbp109.reservieren r GROUP BY fahrt)r ON f.fid=r.fahrt WHERE f.status='offen'");
+                    .prepareStatement("select f.transportmittel,f.fid,f.STARTORT,f.zielort,f.STATUS,f.maxPlaetze,f.fahrtkosten, r.anzPlaetze FROM dbp109.fahrt f left JOIN (SELECT fahrt,sum(anzPlaetze)AS anzPlaetze FROM dbp109.reservieren r GROUP BY fahrt)r ON f.fid=r.fahrt WHERE f.status='offen'");
             ResultSet res= preparedStatement.executeQuery();
             while (res.next()){
                 //save first part of returned table of type Fahrt
