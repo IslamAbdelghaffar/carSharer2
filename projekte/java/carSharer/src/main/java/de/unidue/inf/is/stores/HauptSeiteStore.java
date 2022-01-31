@@ -62,7 +62,6 @@ public final class HauptSeiteStore implements Closeable {
                         resultSet.getString("ZIELORT"),
                         resultSet.getString("STATUS"),
                         resultSet.getInt("transportmittel"));
-                System.out.println(fahrt.getFid());
                 fahrts.add(fahrt);
                 transportmittel transportmittel= new transportmittel(resultSet.getInt("TID"),resultSet.getString("NAME"));
                 Transportmittels.add(transportmittel);

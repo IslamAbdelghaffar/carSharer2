@@ -23,7 +23,7 @@
     table {
         display: table;
         border-collapse: separate;
-        background-color: gray;
+        background-color: lightcyan;
         border-spacing: 50px;
     }
 
@@ -39,7 +39,7 @@
 
 
 
-<body style="background-color: white; margin-top: 70px;">
+<body style="background-color: #20B2AA; margin-top: 70px;">
 
 
 <div style="background-color: white; padding-top: 20px; text-align: center;">
@@ -56,17 +56,17 @@
         <form action="" onsubmit="submit()">
             <table>
                 <#list fahrts as f>
-                <tr style="background-color: white;">
+                    <tr style="background-color: white;">
 
-                        <td style="width:400px;height:20px; text-align: center;">
+                        <td style="width:400px;height:20px; text-align: center;background-color:peachpuff">
                             <a href="FahrtDetails?fid=${f.fid}&bid=${user}"> <img src="http://localhost:9109/icons/${f.transportmittel}.png"
-                                                             style="width:60px; height:30px;border:1px solid black; margin-top: 10px;" alt="${f.transportmittel}.png"></a>
+                                                                                  style="width:60px; height:30px;border:1px solid black; margin-top: 10px;" alt="${f.transportmittel}.png"></a>
                             <p><b>Fahrt ID:</b>${f.fid  ! ''} </p>
                             <p><b>Von: </b>  ${f.startort !''}</p>
                             <p><b>Nach: </b> ${f.zielort  !''}</p>
                         </td>
 
-                </tr>
+                    </tr>
                 </#list>
                 <tr style="background-color: white;">
 

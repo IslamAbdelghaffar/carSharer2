@@ -140,7 +140,6 @@ public class FahrtReservierenStore implements Closeable {
                 prepareStatement("delete from dbp109.reservieren r where r.fahrt=?")) {
             preparedStatement1.setInt(1, fid);
             preparedStatement1.executeUpdate();
-            connection.commit();
             System.out.println("1-the trip  deleted suc from reservieren table");
 
            /* check where this fahrt has entries in schreiben table if so delete it, schreiben table is child  */
@@ -149,7 +148,6 @@ public class FahrtReservierenStore implements Closeable {
                System.out.println("bid: "+bid+"/"+fid);
                preparedStatement2.setInt(1,fid);
                ResultSet Res3=preparedStatement2.executeQuery();
-               connection.commit();
                System.out.println("2-the trip  has rates");
 
                /* delete entries  for this trip from schreiben table *******/
@@ -160,7 +158,6 @@ public class FahrtReservierenStore implements Closeable {
                            prepareStatement("select bewertung from old table (delete from dbp109.schreiben where fahrt=?)")){
                        preparedStatement3.setInt(1,fid);
                        ResultSet Res =preparedStatement3.executeQuery();
-                       connection.commit();
 
                        System.out.println("3-the trip  rate deleted suc from schreiben table");
                        /* delete the same entries for this trip from bewertung table */
@@ -170,7 +167,6 @@ public class FahrtReservierenStore implements Closeable {
                                    prepareStatement("delete from dbp109.bewertung b where b.beid=?")){
                                preparedStatement4.setInt(1,Res.getInt("bewertung"));
                                preparedStatement4.executeUpdate();
-                               connection.commit();
                                System.out.println("4-the trip  rate deleted suc from bewertung table");
 
                            } catch (SQLException throwables) {

@@ -21,6 +21,7 @@ public class FahrtSucheStore implements Closeable {
     public FahrtSucheStore() throws StoreException {
         try {
             connection = DBUtil.getExternalConnection();
+            connection.setAutoCommit(false);
 
         }
         catch (SQLException e) {
@@ -39,12 +40,16 @@ public class FahrtSucheStore implements Closeable {
 
     public List<Fahrt> FahrtSuche(String StartOrt, String ZielOrt, String date){
         List<Fahrt> fahrtSuche  = new ArrayList<>();
-        try (PreparedStatement preparedStatement=connection.prepareStatement("SELECT * from dbp109.fahrt f where (LCASE(f.startort) like ? or f.startort like ?) and (LCASE(f.zielort) like ? or f.zielort like ?) and f.fahrtdatumzeit >=?" )){
+        try (PreparedStatement preparedStatement=connection.prepareStatement("SELECT * from dbp109.fahrt f where ((LCASE(f.startort) like ? or f.startort like ?) or (UCASE(f.startort) like ? or f.startort like ?)) and ((LCASE(f.zielort) like ? or f.zielort like ?) or (UCASE(f.zielort) like ? or f.zielort like ?)) and f.fahrtdatumzeit >=?" )){
             preparedStatement.setString(1,StartOrt + "%");
             preparedStatement.setString(2,StartOrt + "%");
-            preparedStatement.setString(3,ZielOrt + "%");
-            preparedStatement.setString(4,ZielOrt + "%");
-            preparedStatement.setString(5,date);
+            preparedStatement.setString(3,StartOrt + "%");
+            preparedStatement.setString(4,StartOrt + "%");
+            preparedStatement.setString(5,ZielOrt + "%");
+            preparedStatement.setString(6,ZielOrt + "%");
+            preparedStatement.setString(7,ZielOrt + "%");
+            preparedStatement.setString(8,ZielOrt + "%");
+            preparedStatement.setString(9,date);
             ResultSet Res= preparedStatement.executeQuery();
             System.out.println("I am in fahrtsuche now");
             while (Res.next()){

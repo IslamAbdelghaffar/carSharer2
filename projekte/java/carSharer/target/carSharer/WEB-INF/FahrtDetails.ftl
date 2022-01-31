@@ -32,26 +32,26 @@
     }
 </style>
 
-<body style="background-color: white;margin-top: 70px;">
+<body style="background-color: #20B2AA;margin-top: 70px;">
 
 <form action='HauptSeite' onsubmit="submit()">
     <input class="control" value="Home" type="submit"
-           style="background-color: black;border-color: white;color:white;text-align: center; width:100px;height:30px;margin-left:350px;margin-top:-15px ;">
+           style="background-color: black;border-color: white;color:white;text-align: center; width:100px;height:30px;margin-left:350px;margin-top:-15px;position:relative;right:120px;">
 </form>
 
-<h2 style="text-align: center;width:40%;height:40px;border:1px solid black;background-color: rgb(224,222,222);padding-bottom: 0px;margin-bottom: 5px;"><b>Informationen</b></h2>
+<h2 style="text-align: center;width:40%;height:40px;border:1px solid black;background-color:peachpuff;padding-bottom: 0px;margin-bottom: 5px;position:relative;right:100px;"><b>Informationen</b></h2>
 
 
-<div class="container2" style="text-align: center; border:1px solid black;align-items:center;background-color:rgb(224,222,222);width:40%;height:auto;margin-top: 10px;">
+<div class="container2" style="text-align: center; border:1px solid black;align-items:center;background-color:peachpuff;width:40%;height:auto;margin-top: 10px;position:relative;right:100px;line-height:1.5;">
 
-    <p class="an"><b>Anbieter: </b>&ensp; d ${benutzer.email !'keine email'} </p>
-    <p class="fu"><b>fahrtdatum und -uhrzeit:</b> &ensp;${FahrtDetails.fahrtdatumzeit} </p>
-    <p class="vo"> <b>von: </b>&ensp; ${FahrtDetails.startort ! 'keine'}</p>
-    <p class="na"><b>Nach: </b>&ensp; ${FahrtDetails.zielort ! 'keine'}</p>
-    <p class="AnF"><b>Anzahl Freier-Plätze:</b> &ensp; ${FahrtDetails.freierPlaetze ! 'keine'}</p>
-    <p class="FK"><b>Fahrtkosten: </b> &ensp; ${FahrtDetails.fahrtkosten ! 'keine'} &#8364;</p>
-    <p class="ST"><b>Status: </b> &ensp;  ${FahrtDetails.status}</p>
-    <p class="besch"><b>Beschreibung: </b> </p>
+    <p class="an" ><b>Anbieter: </b>&ensp;  ${benutzer.email !'keine email'} </p>
+    <p class="fu" style="position:relative;right:90px;"><b>fahrtdatum und -uhrzeit:</b> &ensp;${FahrtDetails.fahrtdatumzeit} </p>
+    <p class="vo" style="position:relative;right:25px;"> <b>von: </b>&ensp; ${FahrtDetails.startort ! 'keine'}</p>
+    <p class="na" style="position:relative;right:30px;"><b>Nach: </b>&ensp; ${FahrtDetails.zielort ! 'keine'}</p>
+    <p class="AnF" style="position:relative;right:110px;"><b>Anzahl Freier-Plätze:</b> &ensp; ${FahrtDetails.freierPlaetze ! 'keine'}</p>
+    <p class="FK"style="position:relative;right:70px;"><b>Fahrtkosten: </b> &ensp; ${FahrtDetails.fahrtkosten ! 'keine'} &#8364;</p>
+    <p class="ST" style="position:relative;right:50px;"><b>Status: </b> &ensp;  ${FahrtDetails.status}</p>
+    <p class="besch" style="position:relative;right:97px;"><b>Beschreibung: </b> </p>
     <textarea readonly class="txtx" id="Beschreibung" name="Beschreibung" rows="5"
               cols="40">${FahrtDetails.beschreibung ! 'keine beschreibung'} </textarea>
     <hr>
@@ -85,17 +85,27 @@
 
     <hr>
     <span class="BEW"><b>Bewertungen</b></span>&emsp;&emsp;
-    <span>Durchschnittsrating:&ensp; 4,33 </span><br><br>
-   <!-- <table align="center">
+    <span>Durchschnittsrating:&ensp; ${average} </span><br><br>
+    <table align="center">
         <thead>
         <tr>
             <th>Benutzer</th>
             <th>Beschreibung</th>
             <th>Rating</th>
         </tr>
+
+        <#list Rates as R>
+
+            <tr>
+                <th>${R.benutzerEmail !''}</th>
+                <th>${R.beschreibung ! ''}</th>
+                <th>${R.rate !''}</th>
+            </tr>
+        </#list>
         </thead>
+
         <tbody id="tableData"></tbody>
-    </table><br>-->
+    </table><br>
     <a href="FahrtBewerten?bid=${user}&fid=${FahrtDetails.fid}"
        style="background-color:black;Border-color:white;color:White; height:25px; width:100px; padding:5px 5px; text-decoration: none;"><b>Fahrt
             bewerten</b></a><br><br>
@@ -115,26 +125,7 @@
             return true;
         }
     }
-
-
 </script>-->
-
-<table border="1" cellspacing="0" cellpadding="1">
-    <tr class="tableHeader">
-        <td>Benutzer</td>
-        <td>Beschreibung</td>
-        <td>Rating</td>
-
-    </tr>
-    <#foreach bewertung in bewertung>
-        <tr class="tableBody">
-            <td>'hello'</td>
-            <td>${bewertung.beschreibung ! '' }</td>
-            <td>${bewertung.rate ! '' }</td>
-
-        </tr>
-    </#foreach>
-</table>
 
 </body>
 

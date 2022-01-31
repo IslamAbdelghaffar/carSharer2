@@ -16,6 +16,7 @@ public final class FahrtBewrtenStore implements Closeable {
     public FahrtBewrtenStore() throws StoreException {
         try {
             connection = DBUtil.getExternalConnection();
+            connection.setAutoCommit(false);
 
         }
         catch (SQLException e) {
@@ -31,9 +32,6 @@ public final class FahrtBewrtenStore implements Closeable {
         try (PreparedStatement preparedStatement0=connection.prepareStatement("select f.fid from dbp109.fahrt f where f.anbieter=? and f.fid=?")){
             preparedStatement0.setInt(1,benutzerid);
             preparedStatement0.setInt(2,fahrtid);
-            System.out.println("bid: "+benutzerid);
-
-            System.out.println("fid: "+fahrtid);
             ResultSet Res0= preparedStatement0.executeQuery();
 
             if(! Res0.next()){
@@ -62,16 +60,19 @@ public final class FahrtBewrtenStore implements Closeable {
                                 preparedStatement3.setInt(2,fahrtid);
                                 preparedStatement3.setInt(3,BewertungID);
                                 preparedStatement3.executeUpdate();
-                                connection.commit();
                                 System.out.println("insert bewertung in schreiben table succeed");
                                 return true;
 
-                            }
-                        }
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();}
+
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();}
 
                     }else
 
                         return false;
+
                 } catch (SQLException throwables) {
                     System.out.println("die kunde hat schon einmal bewert ");
                     throwables.printStackTrace();

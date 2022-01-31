@@ -36,39 +36,43 @@ public class FahrtSucheServlet extends HttpServlet {
         String zielOrt= request.getParameter("ziel");
         String ab= request.getParameter("ab");
 
-/************* Convert Date ****************/
-        DateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy");
-        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        try {
-            date = inputFormat.parse(ab);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String outputText = outputFormat.format(date);
-        String DateTime = DateTimeUtil.convertDateAndTimeToDB2DateTime(outputText,"00:00");
-
-        System.out.println(date);
-        System.out.println(outputText);
-        System.out.println(DateTime);
+        /*   test if the view send valid data ! */
+       if(startOrt.length() !=0 && zielOrt.length() !=0 && ab.length() !=0){
+           /* Convert Date ****************/
+           DateFormat outputFormat = new SimpleDateFormat("dd.MM.yyyy");
+           DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+           Date date = null;
+           try {
+               date = inputFormat.parse(ab);
+           } catch (ParseException e) {
+               e.printStackTrace();
+           }
+           String outputText = outputFormat.format(date);
+           String DateTime = DateTimeUtil.convertDateAndTimeToDB2DateTime(outputText,"00:00");
 
 
-        List<Fahrt> fahrten= new ArrayList<>();
-        fahrten= FahrtSucheStore.getInstance().FahrtSuche(startOrt,zielOrt,DateTime);
 
-        if(fahrten.size() != 0){
 
-            request.setAttribute("fahrten",fahrten);
-            request.setAttribute("user", benutzer.getBid());
-            //  request.setAttribute("message","suc");
-            request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);
+           List<Fahrt> fahrten= new ArrayList<>();
+           fahrten= FahrtSucheStore.getInstance().FahrtSuche(startOrt,zielOrt,DateTime);
 
-        } else{
-            System.out.println("I am here in servlet");
-            request.setAttribute("fahrten",fahrten);
-            request.setAttribute("message","there no trips");
-            request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);
-        }
+           if(fahrten.size() != 0){
+
+               request.setAttribute("fahrten",fahrten);
+               request.setAttribute("user", benutzer.getBid());
+               //  request.setAttribute("message","suc");
+               request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);
+
+           } else{
+               System.out.println("I am here in servlet");
+               request.setAttribute("fahrten",fahrten);
+               request.setAttribute("message","there no trips");
+               request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);
+           }
+       }else {
+           doGet(request,response);
+       }
+
     }
 
 }

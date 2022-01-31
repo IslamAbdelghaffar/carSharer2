@@ -9,7 +9,7 @@ public class benutzer {
      */
 
 
-   private static int  bid=2;
+   private static int  bid=5;
    private String name;
    private String email;
    private int fahrerlaubnisnummer;
@@ -22,7 +22,7 @@ public class benutzer {
         this.email = email;
 
     }
-
+//MVC MODEL , VIEWER, CON
     public benutzer(int bid,String email) {
         this.bid=bid;
         this.email = email;

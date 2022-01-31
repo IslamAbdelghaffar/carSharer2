@@ -52,7 +52,7 @@ public final class FahrtErstellenStore implements Closeable {
             preparedStatement.setInt(7,fahrt.getAnbieter());
             preparedStatement.setInt(8,fahrt.getTransportmittel());
             preparedStatement.setString(9,fahrt.getBeschreibung());
-            int x= preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate();
             connection.commit();
             return fahrt;
         }

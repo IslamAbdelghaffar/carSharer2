@@ -32,6 +32,7 @@ public class BestDriverStore implements Closeable {
     public BestDriverStore() throws StoreException {
         try {
             connection = DBUtil.getExternalConnection();
+            connection.setAutoCommit(false);
 
         }
         catch (SQLException e) {

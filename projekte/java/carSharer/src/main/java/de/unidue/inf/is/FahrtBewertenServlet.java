@@ -30,62 +30,66 @@ public class FahrtBewertenServlet extends HttpServlet {
 
     @Override
     public void doPost (HttpServletRequest request, HttpServletResponse response)throws IOException {
-        if(request.getParameter("action").equals("bewert")){
-            System.out.println("from do post"+schreiben.getFahrt());
-            System.out.println("from do post"+schreiben.getBenutzer());
-            FahrtBewrtenStore fahrtBewrtenStore=new FahrtBewrtenStore();
-            // import time now
-            Date date = new Date();
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd.MM.yyyy");
-            String bewertdate = simpleDateFormat.format(date);
-            System.out.println("bewert date"+bewertdate);
-            SimpleDateFormat simpleDateFormat2=new SimpleDateFormat("HH:mm");
-            String berwerttime= simpleDateFormat2.format(date);
-            String erstllungsdatum= DateTimeUtil.convertDateAndTimeToDB2DateTime(bewertdate,berwerttime);
-            System.out.println(erstllungsdatum);
+        // import time now and initialize your attributes
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd.MM.yyyy");
+        String bewertdate = simpleDateFormat.format(date);
+        System.out.println("bewert date"+bewertdate);
+        SimpleDateFormat simpleDateFormat2=new SimpleDateFormat("HH:mm");
+        String berwerttime= simpleDateFormat2.format(date);
+        String erstllungsdatum= DateTimeUtil.convertDateAndTimeToDB2DateTime(bewertdate,berwerttime);
 
-            String Beschreibung= request.getParameter("Beschreibung");
-            int Bewertungsrating=Integer.parseInt(request.getParameter("Bewertungsrating"));
+        String Beschreibung= request.getParameter("Beschreibung");
+        int Bewertungsrating=Integer.parseInt(request.getParameter("Bewertungsrating"));
+
+        /* test if viewer send valid data */
+        if(Beschreibung.length() !=0 &&  (Bewertungsrating >=1 && Bewertungsrating <=5)){
+            if(request.getParameter("action").equals("bewert")){
+
+                FahrtBewrtenStore fahrtBewrtenStore=new FahrtBewrtenStore();
 
 
-            try {
-                if(fahrtBewrtenStore.FahrtBewerten(schreiben.getBenutzer(), schreiben.getFahrt(), Beschreibung, erstllungsdatum, Bewertungsrating)){
-                    try {
-                        //set request attributes
+                try {
+                    if(fahrtBewrtenStore.FahrtBewerten(schreiben.getBenutzer(), schreiben.getFahrt(), Beschreibung, erstllungsdatum, Bewertungsrating)){
+                        try {
+                            //set request attributes
 
-                    //    request.setAttribute("message", "erfolgreich");
-                        // Dispatch request to template engine
+                            //    request.setAttribute("message", "erfolgreich");
+                            // Dispatch request to template engine
 
-                        request.setAttribute("bid",schreiben.getBenutzer());
-                        request.setAttribute("fid",schreiben.getFahrt());
+                            request.setAttribute("bid",schreiben.getBenutzer());
+                            request.setAttribute("fid",schreiben.getFahrt());
 
-                        int bid= (int)request.getAttribute("bid");
-                        System.out.println("bid after casting"+bid);
-                       System.out.println("bid"+schreiben.getBenutzer());
-                        System.out.println("fid"+schreiben.getFahrt());
-                        request.getRequestDispatcher("FahrtDetails").forward(request, response);
-                        fahrtBewrtenStore.complete();
-                    } catch (ServletException | IOException e) {
-                        e.printStackTrace();
+                            int bid= (int)request.getAttribute("bid");
+                            System.out.println("bid after casting"+bid);
+                            System.out.println("bid"+schreiben.getBenutzer());
+                            System.out.println("fid"+schreiben.getFahrt());
+                            fahrtBewrtenStore.complete();
+                            fahrtBewrtenStore.close();
+                            request.getRequestDispatcher("FahrtDetails").forward(request, response);
+                        } catch (ServletException | IOException e) {
+                            e.printStackTrace();
+                        }
+                        // else means there is user in data base with the same data
                     }
-                    // else means there is user in data base with the same data
-                }
-                else {
+                    else {
 
-                    try {
-                        //set request attributes
+                        try {
+                            //set request attributes
 
-                        request.setAttribute("message", "Der Bewertungsprozess ist fehlgeschlagen,Sie haben schon einmal bewertet oder Sie sind der ersteller der fahrt");
-                        // Dispatch request to template engine
-                        request.getRequestDispatcher("FahrtBewerten.ftl").forward(request, response);
-                        fahrtBewrtenStore.close();
-                    } catch (ServletException | IOException e) {
-                        e.printStackTrace();
+                            request.setAttribute("message", "Der Bewertungsprozess ist fehlgeschlagen,Sie haben schon einmal bewertet oder Sie sind der ersteller der fahrt");
+                            // Dispatch request to template engine
+                            request.getRequestDispatcher("FahrtBewerten.ftl").forward(request, response);
+                            fahrtBewrtenStore.close();
+                        } catch (ServletException | IOException e) {
+                            e.printStackTrace();
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
         }
 
     }
