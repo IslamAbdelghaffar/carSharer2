@@ -124,9 +124,9 @@ public class FahrtReservierenStore implements Closeable {
         }
         return false;
     }
-    /** löschen **/
 
 
+    /**                löschen                            **/
     public boolean FahrtLoeschen(int fid,int bid){
         List<fahrerlaubnis> fahrerlaubnisse= new ArrayList<>();
         /* if the user already book the trip and rate it. it will delete the row which contains kunde,fahrt from reservieren and benutzer,fahrt from schreiben , as well as
@@ -224,9 +224,12 @@ public class FahrtReservierenStore implements Closeable {
             try {
                 if (complete) {
                     connection.commit();
+                    System.out.println("HI from Fahrt Reservieren Store line 227, I committed your changes in database");
                 }
                 else {
                     connection.rollback();
+                    System.out.println("HI from Fahrt Reservieren Store line 231, I rolled back your changes in database");
+
                 }
             }
             catch (SQLException e) {
@@ -235,6 +238,7 @@ public class FahrtReservierenStore implements Closeable {
             finally {
                 try {
                     connection.close();
+                    System.out.println("HI from Reservieren Store line 241,the connection with data base has been closed");
                 }
                 catch (SQLException e) {
                     throw new StoreException(e);

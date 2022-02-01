@@ -54,7 +54,6 @@ public class FahrtBewertenServlet extends HttpServlet {
                         try {
                             //set request attributes
 
-                            //    request.setAttribute("message", "erfolgreich");
                             // Dispatch request to template engine
 
                             request.setAttribute("bid",schreiben.getBenutzer());
@@ -90,6 +89,15 @@ public class FahrtBewertenServlet extends HttpServlet {
                 }
             }
 
+        }else{
+
+            try {
+                request.setAttribute("message", "Please Enter valid Data");
+                // Dispatch request to template engine
+                request.getRequestDispatcher("FahrtBewerten.ftl").forward(request, response);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            }
         }
 
     }

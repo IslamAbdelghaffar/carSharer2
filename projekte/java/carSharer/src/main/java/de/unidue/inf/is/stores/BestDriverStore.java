@@ -15,19 +15,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BestDriverStore implements Closeable {
-    private static BestDriverStore instance;
     private Connection connection;
     private boolean complete;
-    benutzer BestDriverEmail;
+    public String BestDriverEmail;
     private float average;
+
+    public  String getBestDriverEmail() {
+        System.out.println("HI FROM REturn func: "+ BestDriverEmail);
+        return this.BestDriverEmail;
+    }
 
     public float getAverage() {
         return average;
     }
 
-    public benutzer getBestDriverEmail() {
-        return BestDriverEmail;
-    }
+
 
     public BestDriverStore() throws StoreException {
         try {
@@ -41,13 +43,6 @@ public class BestDriverStore implements Closeable {
     }
 
 
-    public static BestDriverStore getInstance() {
-        if (instance == null) {
-            instance = new BestDriverStore();
-        }
-
-        return instance;
-    }
 
     public List<Fahrt> BestDriverData (){
         List<Fahrt> bestDriverFahrten = new ArrayList<>();
@@ -57,7 +52,8 @@ public class BestDriverStore implements Closeable {
             System.out.println("Hello after exe");
             /** Driver email **/
             Res.next();
-            BestDriverEmail = new benutzer(Res.getString("EMAIL"));
+            this.BestDriverEmail =Res.getString("EMAIL");
+            System.out.println("benutzer email: " +Res.getString("EMAIL"));
             int bestdriverID=Res.getInt("ANBIETER");
              average= Res.getFloat("AVERAGE");
             System.out.println("Hello after BestDriverEmail");
@@ -71,6 +67,8 @@ public class BestDriverStore implements Closeable {
                    bestDriverFahrten.add(bestDriverFahrt);
                }
 
+           }catch (SQLException throwables) {
+               throwables.printStackTrace();
            }
 
             System.out.println("Hello after bestDriverFahrten");
@@ -96,9 +94,13 @@ public class BestDriverStore implements Closeable {
             try {
                 if (complete) {
                     connection.commit();
+                    System.out.println("hi BestDriverStore the connection with datatbase has been closed");
+
                 }
                 else {
                     connection.rollback();
+                    System.out.println("hi BestDriverStore the connection with datatbase has been closed");
+
                 }
             }
             catch (SQLException e) {
@@ -107,6 +109,7 @@ public class BestDriverStore implements Closeable {
             finally {
                 try {
                     connection.close();
+                    System.out.println("hi BestDriverStore the connection with datatbase has been closed");
                 }
                 catch (SQLException e) {
                     throw new StoreException(e);

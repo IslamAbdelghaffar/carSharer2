@@ -27,16 +27,13 @@ public class FahrtDetailsServlet  extends HttpServlet {
             int fid = 0;
             int bid = 0;
             /* get farht id and benutzer id and save them */
-         //   System.out.println("bid:   "+neureservieren.getKunde()+"/"+neureservieren.getFahrt());
 
              // I fatch bid for aktionsliste part, and fid for fahrt details part
             System.out.println(request.getParameter("fid"));
             System.out.println(request.getParameter("bid"));
             try {
                  fid= (int)request.getAttribute("fid");
-                System.out.println("bid after casting:  "+fid);
                  bid= (int)request.getAttribute("bid");
-                System.out.println("bid after casting:  "+bid);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -50,7 +47,6 @@ public class FahrtDetailsServlet  extends HttpServlet {
            List<Rate> Rates=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
 
            // contains user's email in the same order as bewertungen
-          // List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
            // Durschschnittsrating for fart = fid
            float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
@@ -60,8 +56,6 @@ public class FahrtDetailsServlet  extends HttpServlet {
 
            /*aktionliste request**/
            request.setAttribute("benutzer",benutzer);
-           System.out.println("hi :  *****"+benutzer.getEmail());
-           System.out.println("hi from fahtDetailServlet line 50, this is the driver email:  "+benutzer.getEmail());
            request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
            /*Informationen request**/
            request.setAttribute("FahrtDetails",fahrt);
@@ -82,19 +76,15 @@ public class FahrtDetailsServlet  extends HttpServlet {
               List<Rate> Rates=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
 
               // contains user's email in the same order as bewertungen
-            // List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
               // Durschschnittsrating for fart = fid
               float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
               /*bewertung request**/
               request.setAttribute("average",Durschschnittrating);
-            //  request.setAttribute("benutzerBewertungEmail",benutzersemails);
               request.setAttribute("Rates",Rates );
 
               /*aktionliste request**/
               request.setAttribute("benutzer",benutzer);
-              System.out.println("hi :  *****"+benutzer.getEmail());
-              System.out.println("hi from fahtDetailServlet line 50, this is the driver email:  "+benutzer.getEmail());
               request.setAttribute("user", de.unidue.inf.is.domain.benutzer.getBid());
               /*Informationen request**/
               request.setAttribute("FahrtDetails",fahrt);
@@ -138,13 +128,11 @@ public class FahrtDetailsServlet  extends HttpServlet {
                          List<Rate> Rates=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
 
                          // contains user's email in the same order as bewertungen
-                         //  List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
                          // Durschschnittsrating for fart = fid
                          float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
                          /*bewertung request**/
                          request.setAttribute("average",Durschschnittrating);
-                         //request.setAttribute("benutzerBewertungEmail",benutzersemails);
                          request.setAttribute("Rates",Rates);
 
                          /*aktionliste request**/
@@ -173,13 +161,11 @@ public class FahrtDetailsServlet  extends HttpServlet {
                          List<Rate> Rates=fahrtDetailsStore.getbewertung(neureservieren.getFahrt());
 
                          // contains user's email in the same order as bewertungen
-                         // List<benutzer> benutzersemails=fahrtDetailsStore.getBenutzers();
                          // Durschschnittsrating for fart = fid
                          float Durschschnittrating=fahrtDetailsStore.getAveragerate(neureservieren.getFahrt());
 
                          /*bewertung request**/
                          request.setAttribute("average",Durschschnittrating);
-                         //request.setAttribute("benutzerBewertungEmail",benutzersemails);
                          request.setAttribute("Rates",Rates);
 
                          /*aktionliste request**/

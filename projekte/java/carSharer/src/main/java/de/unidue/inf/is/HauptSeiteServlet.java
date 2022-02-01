@@ -31,15 +31,14 @@ public final class HauptSeiteServlet extends HttpServlet {
 
             /******** send meine reservierte fahrten to viewer *******/
             request.setAttribute("benutzer", benutzer.getBid());
-            System.out.println("hello from hauptSeite Servlet: I will send this benutzer id to hauptseite (viewer) and it will forward it to fahrt Details:   "+benutzer.getBid());
             request.setAttribute("ReservFahrten", MeineReservfahrte);
             request.setAttribute("offeneFahrten",offeneFahrten);
             request.setAttribute("transportmittels",transportmittels);
+            hauptSeiteStore.complete();
+            hauptSeiteStore.close();
 
             request.getRequestDispatcher("HauptSeite.ftl").forward(request, response);
 
-
-            hauptSeiteStore.complete();
         }
 
     }

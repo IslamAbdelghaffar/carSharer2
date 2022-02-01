@@ -52,26 +52,29 @@ public class FahrtSucheServlet extends HttpServlet {
 
 
 
-
+           FahrtSucheStore fahrtSucheStore=new FahrtSucheStore();
            List<Fahrt> fahrten= new ArrayList<>();
-           fahrten= FahrtSucheStore.getInstance().FahrtSuche(startOrt,zielOrt,DateTime);
+           fahrten= fahrtSucheStore.FahrtSuche(startOrt,zielOrt,DateTime);
 
            if(fahrten.size() != 0){
 
                request.setAttribute("fahrten",fahrten);
                request.setAttribute("user", benutzer.getBid());
-               //  request.setAttribute("message","suc");
+               fahrtSucheStore.complete();
                request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);
-
+               fahrtSucheStore.close();
            } else{
                System.out.println("I am here in servlet");
                request.setAttribute("fahrten",fahrten);
                request.setAttribute("message","there no trips");
+               fahrtSucheStore.complete();
                request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);
+               fahrtSucheStore.close();
+
            }
        }else {
-           doGet(request,response);
-       }
+           request.setAttribute("message","Please Enter valid data");
+           request.getRequestDispatcher("FahrtSuche.ftl").forward(request,response);       }
 
     }
 

@@ -51,8 +51,8 @@
 
     <div style="text-align: center;">
 
-        <p style="text-align: center;">fahrer: ${benutzers.email}</p>
-        <p style="text-align: center;">Durchschnitterating: ${average}</p>
+        <p style="text-align: center;">fahrer: ${benutzers!}</p>
+        <p style="text-align: center;">Durchschnitterating: ${average!}</p>
         <form action="" onsubmit="submit()">
             <table>
                 <#list fahrts as f>

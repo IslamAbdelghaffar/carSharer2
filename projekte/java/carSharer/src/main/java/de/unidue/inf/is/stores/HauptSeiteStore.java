@@ -111,9 +111,13 @@ public final class HauptSeiteStore implements Closeable {
             try {
                 if (complete) {
                     connection.commit();
+                    System.out.println("hi from hauptseiteStore, I committed your changes in DB");
+
                 }
                 else {
                     connection.rollback();
+                    System.out.println("hi from hauptseiteStore, I rolledback your changes in DB");
+
                 }
             }
             catch (SQLException e) {
@@ -122,6 +126,7 @@ public final class HauptSeiteStore implements Closeable {
             finally {
                 try {
                     connection.close();
+                    System.out.println("hi from hauptseiteStore the connection with data base has been closed");
                 }
                 catch (SQLException e) {
                     throw new StoreException(e);

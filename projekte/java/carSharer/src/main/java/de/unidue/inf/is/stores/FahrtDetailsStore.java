@@ -62,9 +62,6 @@ public final class FahrtDetailsStore implements Closeable {
                         Res.getInt("Transportmittel"));
                 System.out.println(fahrt.getBeschreibung());
                 benutzer = new benutzer(Res.getString("EMAIL"));
-                System.out.println("hello from fahrt details store this is the email of anbieter of the fahrt: "+ benutzer.getEmail());
-                System.out.println("time:  "+ DateTimeUtil.extractTimeFromDB2DateTimeString (Res.getString("FAHRTDATUMZEIT")+"date:  "+
-                        DateTimeUtil.extractDateFromDB2DateTimeString(Res.getString("FAHRTDATUMZEIT"))));
                 return fahrt;
 
             } catch (SQLException throwables) {
@@ -86,9 +83,7 @@ public final class FahrtDetailsStore implements Closeable {
             ResultSet Res=preparedStatement.executeQuery();
             while (Res.next()){
                 Rate rate=new Rate(Res.getString("Email"), Res.getString("TEXTNACHRICHT"),Res.getInt("RATING"));
-
                 Rates.add(rate);
-
             }
             return Rates;
         } catch (SQLException throwables) {
@@ -127,9 +122,13 @@ public final class FahrtDetailsStore implements Closeable {
             try {
                 if (complete) {
                     connection.commit();
+                    System.out.println("HI from Fahrt Details Store line 125, I committed your changes in database");
+
                 }
                 else {
                     connection.rollback();
+                    System.out.println("HI from Fahrt Details Store line 130, I Rolled back your changes in database");
+
                 }
             }
             catch (SQLException e) {
@@ -138,6 +137,8 @@ public final class FahrtDetailsStore implements Closeable {
             finally {
                 try {
                     connection.close();
+                    System.out.println("HI from Fahrt Erstellen Store line 140, The connection with database has been closed");
+
                 }
                 catch (SQLException e) {
                     throw new StoreException(e);

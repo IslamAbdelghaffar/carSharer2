@@ -27,7 +27,6 @@ public final class UserStore implements Closeable {
         }
     }
 
-
     public void addUser(User userToAdd) throws StoreException {
         try {
             PreparedStatement preparedStatement = connection

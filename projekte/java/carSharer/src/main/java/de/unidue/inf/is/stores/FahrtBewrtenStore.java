@@ -102,9 +102,13 @@ public final class FahrtBewrtenStore implements Closeable {
             try {
                 if (complete) {
                     connection.commit();
+                    System.out.println("HI from Fahrt Bewerten Store line 108, I committed your changes in database");
+
                 }
                 else {
                     connection.rollback();
+                    System.out.println("HI from Fahrt Bewerten Store line 108, I rolled back your changes in database");
+
                 }
             }
             catch (SQLException e) {
@@ -113,6 +117,7 @@ public final class FahrtBewrtenStore implements Closeable {
             finally {
                 try {
                     connection.close();
+                    System.out.println("hi from FahrtBewertenStore the connection with database has been closed");
                 }
                 catch (SQLException e) {
                     throw new StoreException(e);

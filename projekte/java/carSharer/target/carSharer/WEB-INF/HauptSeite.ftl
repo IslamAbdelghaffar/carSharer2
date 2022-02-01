@@ -63,7 +63,7 @@
 <h2 style="font-family: courier;text-align: center; border:1px solid  black;background-color:gray;color:white;margin-bottom:0px;">Meine
     reservierte Fahrten</h2>
 
-<br> ${message ! ''}</br>
+<br> ${message ! ''}<br><br><br><br>
 <form action="onsubmit="submit()" style="position:relative;bottom:30px;" >
 <table align="center">
 
@@ -115,7 +115,7 @@
 
     </form>
 </table>
-<form class="button" action="FahrtErstellen" style=" onsubmit=" submit()">
+<form class="button" action="FahrtErstellen" style=" onsubmit:="submit()">
 <input type="submit" value="fahrt"
        style="text-align:center; background-color:black; border-color: white;color:whitesmoke; width:100px;height:30px;">
 </form>

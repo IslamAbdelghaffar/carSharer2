@@ -16,19 +16,25 @@ public class BestDriverServlet extends HttpServlet {
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-
+        BestDriverStore bestDriverStore=new BestDriverStore();
         /* get data from store */
-        benutzer benutzers=BestDriverStore.getInstance().getBestDriverEmail();
-        List<Fahrt> fahrts = BestDriverStore.getInstance().BestDriverData();
-        float average= BestDriverStore.getInstance().getAverage();
+        List<Fahrt> fahrts = bestDriverStore.BestDriverData();
+
+        String benutzers= bestDriverStore.getBestDriverEmail();
+        System.out.println("1- hi from store:  "+benutzers);
+        float average= bestDriverStore.getAverage();
+        System.out.println("average:  "+average);
 
         /* send data to viewer  */
-        request.setAttribute("benutzers",benutzers);
+
         request.setAttribute("fahrts",fahrts);
         request.setAttribute("average",average);
         request.setAttribute("user",benutzer.getBid());
+        request.setAttribute("benutzers",benutzers);
+        System.out.println(benutzers);
+        bestDriverStore.complete();
         request.getRequestDispatcher("BestDriver.ftl").forward(request,response);
-
+        bestDriverStore.close();
     }
 
 

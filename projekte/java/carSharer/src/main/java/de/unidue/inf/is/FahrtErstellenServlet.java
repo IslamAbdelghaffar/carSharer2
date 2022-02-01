@@ -84,8 +84,8 @@ public class FahrtErstellenServlet extends HttpServlet {
           }
 
       }else
-          doGet(request,response);
-
+            request.setAttribute("message","Please enter valid data");
+        request.getRequestDispatcher("FahrtErstellen.ftl").forward(request,response);
 
     }
 }

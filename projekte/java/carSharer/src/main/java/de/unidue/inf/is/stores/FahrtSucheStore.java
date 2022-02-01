@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FahrtSucheStore implements Closeable {
-    private static FahrtSucheStore instance;
 
     private Connection connection;
     private boolean complete;
@@ -29,26 +28,20 @@ public class FahrtSucheStore implements Closeable {
         }
     }
 
-    public static FahrtSucheStore getInstance() {
-        if (instance == null) {
-            instance = new FahrtSucheStore();
-        }
 
-        return instance;
-    }
 
 
     public List<Fahrt> FahrtSuche(String StartOrt, String ZielOrt, String date){
         List<Fahrt> fahrtSuche  = new ArrayList<>();
         try (PreparedStatement preparedStatement=connection.prepareStatement("SELECT * from dbp109.fahrt f where ((LCASE(f.startort) like ? or f.startort like ?) or (UCASE(f.startort) like ? or f.startort like ?)) and ((LCASE(f.zielort) like ? or f.zielort like ?) or (UCASE(f.zielort) like ? or f.zielort like ?)) and f.fahrtdatumzeit >=?" )){
-            preparedStatement.setString(1,StartOrt + "%");
-            preparedStatement.setString(2,StartOrt + "%");
-            preparedStatement.setString(3,StartOrt + "%");
-            preparedStatement.setString(4,StartOrt + "%");
-            preparedStatement.setString(5,ZielOrt + "%");
-            preparedStatement.setString(6,ZielOrt + "%");
-            preparedStatement.setString(7,ZielOrt + "%");
-            preparedStatement.setString(8,ZielOrt + "%");
+            preparedStatement.setString(1,"%"+ StartOrt + "%");
+            preparedStatement.setString(2,"%"+StartOrt + "%");
+            preparedStatement.setString(3,"%"+StartOrt + "%");
+            preparedStatement.setString(4,"%"+StartOrt + "%");
+            preparedStatement.setString(5,"%"+ZielOrt + "%");
+            preparedStatement.setString(6,"%"+ZielOrt + "%");
+            preparedStatement.setString(7,"%"+ZielOrt + "%");
+            preparedStatement.setString(8,"%"+ZielOrt + "%");
             preparedStatement.setString(9,date);
             ResultSet Res= preparedStatement.executeQuery();
             System.out.println("I am in fahrtsuche now");
@@ -58,7 +51,6 @@ public class FahrtSucheStore implements Closeable {
                 fahrtSuche.add(fahrt);
                 System.out.println("Hello from suche store I did the search: I found sth ");
             }
-            System.out.println("I am after while now");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -86,9 +78,13 @@ public class FahrtSucheStore implements Closeable {
             try {
                 if (complete) {
                     connection.commit();
+                    System.out.println("HI from FahrtSucheStore,I committed your changes in database");
+
                 }
                 else {
                     connection.rollback();
+                    System.out.println("HI from FahrtSucheStore,I rolled back your changes in database");
+
                 }
             }
             catch (SQLException e) {
@@ -97,6 +93,7 @@ public class FahrtSucheStore implements Closeable {
             finally {
                 try {
                     connection.close();
+                    System.out.println("HI from FahrtSucheStore, the connection with data base has benn closed");
                 }
                 catch (SQLException e) {
                     throw new StoreException(e);

@@ -43,7 +43,8 @@
 
 
 <div class="container2" style="text-align: center; border:1px solid black;align-items:center;background-color:peachpuff;width:40%;height:auto;margin-top: 10px;position:relative;right:100px;line-height:1.5;">
-
+    <a href=''><img src="http://localhost:9109/icons/${FahrtDetails.transportmittel}.png"
+                    style="width:60px; height:30px;border:1px solid black; margin-top: 10px;" alt="${FahrtDetails.transportmittel}.png"></a>
     <p class="an" ><b>Anbieter: </b>&ensp;  ${benutzer.email !'keine email'} </p>
     <p class="fu" style="position:relative;right:90px;"><b>fahrtdatum und -uhrzeit:</b> &ensp;${FahrtDetails.fahrtdatumzeit} </p>
     <p class="vo" style="position:relative;right:25px;"> <b>von: </b>&ensp; ${FahrtDetails.startort ! 'keine'}</p>

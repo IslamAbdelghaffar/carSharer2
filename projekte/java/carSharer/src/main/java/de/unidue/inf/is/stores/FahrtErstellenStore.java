@@ -53,7 +53,6 @@ public final class FahrtErstellenStore implements Closeable {
             preparedStatement.setInt(8,fahrt.getTransportmittel());
             preparedStatement.setString(9,fahrt.getBeschreibung());
             preparedStatement.executeUpdate();
-            connection.commit();
             return fahrt;
         }
     }
@@ -71,9 +70,13 @@ public final class FahrtErstellenStore implements Closeable {
             try {
                 if (complete) {
                     connection.commit();
+                    System.out.println("HI from Fahrt Erstellen Store line 73, I committed your changes in database");
+
                 }
                 else {
                     connection.rollback();
+                    System.out.println("HI from Fahrt Ertellen Store line 78, I rolled back your changes in database");
+
                 }
             }
             catch (SQLException e) {
@@ -82,6 +85,8 @@ public final class FahrtErstellenStore implements Closeable {
             finally {
                 try {
                     connection.close();
+                    System.out.println("HI from Fahrt Ertellen Store line 88,The connection with data base has been closed");
+
                 }
                 catch (SQLException e) {
                     throw new StoreException(e);
